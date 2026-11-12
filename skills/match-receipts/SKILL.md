@@ -63,6 +63,31 @@ Eigene Datei dieses Durchgangs:
 Gibt es sie schon, setz dort fort: Umsätze mit Status `verknuepft` oder
 `ohne_beleg_bestaetigt` fasst du nicht mehr an.
 
+## Bestand zuerst — nichts doppelt
+
+Vor **jedem** Schritt stellst du fest, was es schon gibt, und arbeitest nur die Differenz ab.
+Ein Zeitraum hat oft schon einen `monthly-run`, einen früheren Durchgang oder Handarbeit im
+System hinter sich. Was davon schon erledigt ist, wird übernommen, nicht neu gemacht:
+
+| Schritt | Schon erledigt, wenn … | Quelle |
+|---|---|---|
+| Umsatz einordnen | er im System zugeordnet ist (`bookingState`) | System, nicht Datei |
+| Beleg suchen | Soll-Liste ihn `vorhanden` führt oder eine Datei im Belegordner bzw. in `belege/` des Laufs ihm zugeordnet ist | `10-soll-liste.md`, Feld `beleg` in `70-umsaetze.jsonl` |
+| Bezugsweg ermitteln | der Lieferant im Context `beleg_quelle` **und** `portal` hat | Context |
+| Auslesen | die Datei in `20-belege.jsonl` steht (gleicher Pfad oder gleicher Hash) | `20-belege.jsonl` |
+| Gate B | ein Urteil zur Datei in `50-gates.md` steht | `50-gates.md` |
+| Klassifizieren | der Beleg in `30-klassifikation.jsonl` steht und keine neue Entscheidung ihn ändert | `30-klassifikation.jsonl` |
+| Entscheidung | sie in `60-entscheidungen.md` beantwortet ist oder im Context steht | beides |
+| Hochladen | der Beleg im System liegt (Dedup-Schlüssel P-04) oder `40-erfassung.jsonl` ihn `angelegt` führt | System **und** Datei |
+| Zuordnen | der Umsatz im System verknüpft ist | System |
+
+Bei Widerspruch gilt das System vor der Datei: Steht ein Beleg in `40-erfassung.jsonl`, fehlt
+aber im System, ist er gelöscht oder nie gelandet → melden, nicht still neu anlegen.
+
+Beginne den Durchgang mit einer **Bestandsaufnahme** in `00-lauf.md`: je Schritt, wie viel
+erledigt ist und wie viel offen. Der Mensch sieht so, dass nichts doppelt läuft, und du
+rufst jeden Baustein nur mit der offenen Restmenge auf.
+
 ## Schritt 0 — Vorlauf
 
 1. Context lesen; fehlt er, Abbruch mit Verweis auf `adopt`.
