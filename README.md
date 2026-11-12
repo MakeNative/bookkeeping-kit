@@ -36,7 +36,7 @@ Klick in einer Oberfläche enthält nur Koordinaten. Das ist offengelegt statt �
 ## Installation
 
 ```bash
-/plugin marketplace add MakeNative/bookkeeping-agent-kit
+/plugin marketplace add MakeNative/bookkeeping-kit
 /plugin install bookkeeping-kit@bookkeeping-agent-kit
 ```
 
