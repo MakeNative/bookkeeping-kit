@@ -1,7 +1,7 @@
 {
   "name": "buchhaltung-kit",
   "description": "Agenten-Pipeline für die monatliche Umsatzsteuer-Voranmeldung: Belege sammeln, auslesen, umsatzsteuerlich klassifizieren, im Buchhaltungssystem erfassen und gegenprüfen. Mit Regelwerk, Quality Gates, Audit und Eval. Mandantenneutral — alle Firmendaten liegen im Mandantenprojekt.",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": {
     "name": "ceichmueller"
   },

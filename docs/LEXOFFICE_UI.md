@@ -109,6 +109,35 @@ für eine Sortlist-Rechnung gleichen Betrags. Den richtigen Umsatz schlägt das 
 nicht vor; er bleibt in der Bankansicht offen. Deshalb Vorschlag vor dem Speichern prüfen und
 den passenden Umsatz notfalls selbst suchen (→ `record`, Schritt 3b).
 
+## Kontoumsätze und Belege lesen
+
+Die Bankansicht (`/fis/app/transactions`) und die Belegliste laden ihre Daten über interne
+Schnittstellen. Aus dem Seitenkontext heraus (JavaScript `fetch` mit `credentials:
+'include'`, in einem angemeldeten Tab) lassen sie sich direkt lesen. Das ist schneller und
+vollständiger als Blättern und Abzählen in der Oberfläche:
+
+```
+Kontoumsätze  /fis/finance-rest/financialtransactionservice/v3/financialTransactions
+              ?pageNumber=<n>&pageSize=200&ignored=false
+              Felder: financialTransactionId, transactionDate, amount, openAmount,
+              recipientOrSenderName, purpose, bookingState, proposal
+              bookingState: UNASSIGNED | COMPLETELY_ASSIGNED
+Belege        /grld-rest/voucherservice/1/v200/vouchers
+              ?ascending=false&deletedIds=&firstRow=<n>&numRows=250&orderBy=voucherDate
+              Felder: voucherDate, identificationNumber, contactName, totalGrossAmount,
+              billingStatus (unchecked = „zu prüfen", open, overdue, paid)
+```
+
+Grenzen:
+
+- **Nur lesen.** Angelegt, geändert und zugeordnet wird über die Oberfläche, wie in `record`
+  beschrieben. Die Schnittstellen sind undokumentiert; ein Schreibaufruf daran vorbei
+  umginge Dublettenprüfung und Sichtkontrolle.
+- Sie können sich ohne Ankündigung ändern. Liefert ein Aufruf nicht die erwarteten Felder,
+  in die Oberfläche ausweichen und das im Bericht nennen.
+- Die Browser-Erweiterung kann Ausgaben zurückhalten, die wie Cookies oder Query-Strings
+  aussehen. Dann `=` und `;` in der Ausgabe ersetzen.
+
 ## Was nicht geht
 
 Kein Verschieben eines Belegs aus der Belegliste in eine reine Dokumentenablage. Für

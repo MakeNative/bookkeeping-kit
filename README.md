@@ -8,7 +8,7 @@ gegenprüfen — mit Regelwerk, Quality Gates, Audit und Eval.
 liegt im jeweiligen Mandantenprojekt unter `.claude/docs/COMPANY_CONTEXT.md`. Dasselbe Kit
 bedient beliebig viele Unternehmen.
 
-> Status: **vollständig angelegt** (v0.3.0). Alle Phasen, Gates, Hooks und Agenten sind
+> Status: **vollständig angelegt** (v0.4.0). Alle Phasen, Gates, Hooks und Agenten sind
 > beschrieben. Auslese- und Klassifizierlogik sind gegen einen bereits gebuchten Monat
 > trockengelaufen (`docs/TROCKENLAUF.md`); 
 
@@ -73,11 +73,30 @@ aus** statt sie zu erfragen, nimmt Ordner, Zahlungsquellen und Lieferanten auf u
 | 5 Audit | `monthly-auditor` | **Agent** |
 | 6 Eval | `agent-evaluator` | **Agent** |
 
+## Belege zu Kontoumsätzen
+
+```
+/buchhaltung-kit:match-receipts 2026-10
+```
+
+Geführter Durchgang, der bei den **offenen Kontoumsätzen** im Buchhaltungssystem beginnt und
+endet, wenn jeder Umsatz mit einem Beleg verknüpft ist oder einen benannten Grund hat. Er baut
+nichts nach, sondern ruft die Bausteine des Kits auf: `collect` (Postfach, Portale, Ablage),
+`receipt-reader` und `plausibility-gate`, `tax-classifier`, `record` (Hochladen und Zahlung
+zuordnen), `check-return` Prüfung 7 als Schlusskontrolle, `correction` für gemeldete
+Zeiträume. Den Menschen holt er nur an fünf gebündelten Übergaben dazu: Freigaben, Logins,
+Entscheidungen, nicht auffindbare Belege und Zahlungen ohne Beleg.
+
+`match-receipts` sorgt für vollständige, zugeordnete Belege; `monthly-run` rechnet und prüft
+danach die Voranmeldung.
+
+## Weitere Befehle
+
 ```
 /buchhaltung-kit:follow-up          # offene Punkte abarbeiten, Zeitraum zuordnen
 /buchhaltung-kit:correction 2026-09 # bereits übermittelter Zeitraum: Differenz vorbereiten
-/buchhaltung-kit:audit 2026-09     # unabhängige Nachprüfung, --eval für die Pipeline
-/buchhaltung-kit:rules         # Regeln nachschlagen
+/buchhaltung-kit:audit 2026-09      # unabhängige Nachprüfung, --eval für die Pipeline
+/buchhaltung-kit:rules              # Regeln nachschlagen
 ```
 
 ---

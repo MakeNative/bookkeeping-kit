@@ -26,6 +26,10 @@ Drei Quellen:
    manche rechnen per Sammellastschrift oder Guthaben ab (Muster M-09).
 3. **Ausgangsrechnungen** aus dem Ausgangsordner und dem Buchhaltungssystem.
 
+Ruft `match-receipts` dich auf, ist die Erwartung vorgegeben: die Kontoumsätze mit Status
+`beleg_fehlt` aus `70-umsaetze.jsonl`. Dann nur diese, ohne Lieferantenliste und
+Ausgangsseite, und je Eintrag die `umsatz_id` mitführen.
+
 Beachte dabei:
 - Guthabenaufladungen sind **keine** Belege (E-11) — sie erzeugen keine Erwartung auf einen
   Beleg in gleicher Höhe, sondern den Hinweis auf eine spätere periodische Rechnung.
