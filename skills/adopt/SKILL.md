@@ -5,7 +5,7 @@ disable-model-invocation: true
 ---
 
 Du richtest dieses Projekt für das buchhaltung-kit ein. Arbeite **direkt** — delegiere das
-Schreiben nicht. Für die Belegauswertung darfst du den `beleg-leser` einsetzen.
+Schreiben nicht. Für die Belegauswertung darfst du den `receipt-reader` einsetzen.
 
 Diese Skill läuft im Hauptkontext, weil sie mit dem Menschen spricht: Logins, Rückfragen,
 Freigaben. Das ist Absicht.
@@ -66,7 +66,7 @@ nicht verbunden ist, kann trotzdem längst mitgelesen werden. Trag das als
 
 ## Schritt 4 — Lieferanten-Inventur
 
-Nimm die Belege der letzten zwölf Monate aus dem Eingangsordner. Setze den `beleg-leser` auf
+Nimm die Belege der letzten zwölf Monate aus dem Eingangsordner. Setze den `receipt-reader` auf
 eine Stichprobe je Lieferant an — nicht auf alle Belege; es geht um das Muster, nicht um die
 Vollständigkeit.
 
@@ -114,7 +114,12 @@ Melde dem Nutzer in **einer** Liste, was einmalig umzustellen ist:
 ## Schritt 8 — Dateien anlegen
 
 1. `.claude/docs/COMPANY_CONTEXT.md` nach der Vorlage des Plugins
-2. `.claude/agent-memory/buchhaltung-kit-<agent>/` für die Agenten des Kits
+2. `.claude/agent-memory/buchhaltung-kit-<agent>/` für die Agenten des Kits. Bei einer
+   Auffrischung die Memory-Ordner der alten deutschen Agentennamen umziehen, Inhalt
+   unverändert (bis Plugin 0.2.x):
+   `beleg-leser` → `receipt-reader`, `steuer-klassifizierer` → `tax-classifier`,
+   `plausibilitaets-gate` → `plausibility-gate`, `monats-auditor` → `monthly-auditor`.
+   Existiert der neue Ordner schon, nicht überschreiben, sondern beide dem Nutzer zeigen.
 3. `.claude/buchhaltung-log/` und `.claude/buchhaltung-eval/`
 4. Hooks aus `hooks/hooks.json` in `.claude/settings.json` mergen — **vorhandene Hooks nicht
    überschreiben**, nur ergänzen
@@ -134,7 +139,7 @@ Altbestand, offene Umstellungen.
 Nenne als nächsten Schritt einen **Trockenlauf** für einen abgeschlossenen Monat:
 
 ```
-/buchhaltung-kit:monatslauf <YYYY-MM> --trocken
+/buchhaltung-kit:monthly-run <YYYY-MM> --trocken
 ```
 
 Weise darauf hin, dass Schwellenwerte im Regelwerk mit `wert_pruefen: ja` vor dem produktiven

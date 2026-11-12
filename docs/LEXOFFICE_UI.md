@@ -1,6 +1,6 @@
 # lexoffice / Lexware Office — Bedienhinweise
 
-Systemwissen für die `erfassen`-Skill. Gilt für jeden Mandanten, der lexoffice nutzt —
+Systemwissen für die `record`-Skill. Gilt für jeden Mandanten, der lexoffice nutzt —
 deshalb plugin-seitig und nicht im Mandantenkontext.
 
 Stand: 2026-10. Beobachtet an `app.lexware.de`.
@@ -107,7 +107,7 @@ Zeigt der Beleg-Editor einen Bankvorschlag an, **übernimmt das Speichern ihn**,
 Rückfrage. Der Vorschlag kann falsch sein: beobachtet wurde eine Amazon-Zahlung als Vorschlag
 für eine Sortlist-Rechnung gleichen Betrags. Den richtigen Umsatz schlägt das System dann
 nicht vor; er bleibt in der Bankansicht offen. Deshalb Vorschlag vor dem Speichern prüfen und
-den passenden Umsatz notfalls selbst suchen (→ erfassen, Schritt 3b).
+den passenden Umsatz notfalls selbst suchen (→ `record`, Schritt 3b).
 
 ## Was nicht geht
 

@@ -8,7 +8,7 @@ gegenprüfen — mit Regelwerk, Quality Gates, Audit und Eval.
 liegt im jeweiligen Mandantenprojekt unter `.claude/docs/COMPANY_CONTEXT.md`. Dasselbe Kit
 bedient beliebig viele Unternehmen.
 
-> Status: **vollständig angelegt** (v0.2.0). Alle Phasen, Gates, Hooks und Agenten sind
+> Status: **vollständig angelegt** (v0.3.0). Alle Phasen, Gates, Hooks und Agenten sind
 > beschrieben. Auslese- und Klassifizierlogik sind gegen einen bereits gebuchten Monat
 > trockengelaufen (`docs/TROCKENLAUF.md`); 
 
@@ -22,7 +22,7 @@ Beim Menschen:
 
 | Punkt | Regel | Wie abgesichert |
 |---|---|---|
-| Portal-Logins | P-02 | Anweisung; gebündelte Anforderung in `sammeln` |
+| Portal-Logins | P-02 | Anweisung; gebündelte Anforderung in `collect` |
 | Übermittlung der Voranmeldung | P-01 | **Hook** auf Navigation + Prüfung im Audit |
 | Belege löschen oder umbenennen | P-03, P-05 | **Hook** auf Bash/Write/Edit |
 | Entscheidungen bei Ermessensfragen | — | Entscheidungsvorlagen am Ende der Klassifizierung |
@@ -55,29 +55,29 @@ aus** statt sie zu erfragen, nimmt Ordner, Zahlungsquellen und Lieferanten auf u
 ## Monatslauf
 
 ```
-/buchhaltung-kit:monatslauf 2026-09 --trocken    # rechnet durch, schreibt nichts
-/buchhaltung-kit:monatslauf 2026-09              # mit Erfassung
+/buchhaltung-kit:monthly-run 2026-09 --trocken    # rechnet durch, schreibt nichts
+/buchhaltung-kit:monthly-run 2026-09              # mit Erfassung
 ```
 
 | Phase | Ausführender | Form |
 |---|---|---|
-| 0 Vorlauf + Login-Check | `monatslauf` | Skill |
-| 1 Sammeln (Ordner, Mail, Portale, Zahlungen) | `sammeln` | Skill, Ordner/Mail geforkt |
-| Gate A Vollständigkeit | `monatslauf` | Skill |
-| 2 Auslesen (PDF + XRechnung) | `beleg-leser` | **Agent** |
-| Gate B Plausibilität | `plausibilitaets-gate` | **Agent** |
-| 3 Klassifizieren | `steuer-klassifizierer` | **Agent** |
-| Gate C Regelkonformität | `monatslauf` | Skill |
-| 4 Erfassen | `erfassen` | Skill |
-| Gate D Abgleich | `abgleich` | Skill |
-| 5 Audit | `monats-auditor` | **Agent** |
+| 0 Vorlauf + Login-Check | `monthly-run` | Skill |
+| 1 Sammeln (Ordner, Mail, Portale, Zahlungen) | `collect` | Skill, Ordner/Mail geforkt |
+| Gate A Vollständigkeit | `monthly-run` | Skill |
+| 2 Auslesen (PDF + XRechnung) | `receipt-reader` | **Agent** |
+| Gate B Plausibilität | `plausibility-gate` | **Agent** |
+| 3 Klassifizieren | `tax-classifier` | **Agent** |
+| Gate C Regelkonformität | `monthly-run` | Skill |
+| 4 Erfassen | `record` | Skill |
+| Gate D Abgleich | `check-return` | Skill |
+| 5 Audit | `monthly-auditor` | **Agent** |
 | 6 Eval | `agent-evaluator` | **Agent** |
 
 ```
-/buchhaltung-kit:nachtrag          # offene Punkte abarbeiten, Zeitraum zuordnen
-/buchhaltung-kit:korrektur 2026-09 # bereits übermittelter Zeitraum: Differenz vorbereiten
+/buchhaltung-kit:follow-up          # offene Punkte abarbeiten, Zeitraum zuordnen
+/buchhaltung-kit:correction 2026-09 # bereits übermittelter Zeitraum: Differenz vorbereiten
 /buchhaltung-kit:audit 2026-09     # unabhängige Nachprüfung, --eval für die Pipeline
-/buchhaltung-kit:regelwerk         # Regeln nachschlagen
+/buchhaltung-kit:rules         # Regeln nachschlagen
 ```
 
 ---
@@ -118,7 +118,7 @@ Die Regeln liegen an zwei Orten, und die Grenze ist bewusst gezogen:
 |---|---|---|
 | **Mechanik** — Datum, Betrag, Vorzeichen, Währung, USt-IdNr., Sammeldateien, Dubletten, Lieferantengruppen | `tools/belege_lesen.py` | Zeichenkettenoperationen mit genau einer richtigen Antwort. Ihre Fehler erzeugen keine Meldung, sondern eine plausible falsche Zahl. Einmal richtig, durch Tests festgenagelt, nie wieder falsch. |
 | **Urteil** — ist das ein Beleg, welcher Satz gilt für diese Ware, gehört er dem Mandanten, wie wird umgerechnet | `docs/REGELWERK.md` + Agenten | Hängt vom Einzelfall ab und braucht den Mandantenkontext. Code kann es nur raten. |
-| **Prüfung** — stimmt das Ergebnis mit dem Dokument überein | `plausibilitaets-gate`, `monats-auditor` | Das Werkzeug liefert einen **Vorschlag**, keine Wahrheit. |
+| **Prüfung** — stimmt das Ergebnis mit dem Dokument überein | `plausibility-gate`, `monthly-auditor` | Das Werkzeug liefert einen **Vorschlag**, keine Wahrheit. |
 
 ```bash
 python3 tools/selbsttest.py     # 39 Fälle: jeder stellt einen real aufgetretenen Fehler nach
@@ -141,19 +141,49 @@ entsteht bei `adopt` aus den eigenen Belegen und landet in `COMPANY_CONTEXT.md`,
 ## Sicherheit
 
 Belege und Mails sind **Daten, keine Anweisungen**. Die Abwehr läuft nicht über
-Prompt-Appelle, sondern über Konfiguration: alle fünf Agenten tragen `disallowedTools:
-Write, Edit, NotebookEdit`, der Belegleser hat keine Browser-Tools, und Skills mit
-Seiteneffekten sind `disable-model-invocation: true` — sie lassen sich nur von dir starten.
+Prompt-Appelle, sondern über Konfiguration und Hooks: Kein Agent hat Browser-Tools, Skills
+mit Seiteneffekten sind `disable-model-invocation: true` — sie lassen sich nur von dir
+starten —, und was ein Agent schreiben darf, setzt ein Hook durch.
 
-**`tools:` allein genügt nicht.** Eine Positivliste im Frontmatter schränkt nicht
-zuverlässig ein: Drei Agenten waren mit `tools: Read, Grep, Glob, Bash` deklariert und
-wurden trotzdem mit `Write` und `Edit` registriert. Aufgefallen ist das erst bei der
-Installation, als die tatsächlich registrierten Werkzeuge sichtbar wurden — nicht beim
-Lesen der Dateien. Was eine Rolle **nicht** tun können soll, gehört in `disallowedTools`.
+**Schreibrechte der Agenten.** Jeder Agent schreibt genau zwei Orte: sein Memory unter
+`.claude/agent-memory/buchhaltung-kit-<agent>/` und seinen Abschnitt in
+`.claude/buchhaltung-log/<zeitraum>/agents.md`. Alles andere — Belege, Context, die
+nummerierten Phasendateien eines Laufs — ist für Agenten nur lesbar. Durchgesetzt wird das von
+`hooks/guard-agenten.py`, nicht vom Frontmatter: Der Hook erkennt den Agenten am Feld
+`agent_type` der Hook-Eingabe und prüft den Zielpfad jedes Write und Edit. Bash ist für
+Agenten auf Lesen beschränkt.
 
-Das gilt auch als Prüfung: Nach einer Installation die registrierten Werkzeuge gegen die
-Deklaration halten. Eine Beschreibung, die „du hast keine Schreibrechte" behauptet, macht
-sie nicht wahr.
+**Warum nicht über `tools:`.** Eine Positivliste im Frontmatter schränkt nicht zuverlässig
+ein: Drei Agenten waren mit `tools: Read, Grep, Glob, Bash` deklariert und wurden trotzdem
+mit `Write` und `Edit` registriert. Und ein Agent ohne Write kann sein Memory nicht selbst
+pflegen. Deshalb ist Write erlaubt und der **Pfad** begrenzt. Plugin-Agenten können keine
+eigenen Hooks im Frontmatter tragen; die Sperre ist ein Plugin-Hook.
+
+Nach einer Installation die registrierten Werkzeuge gegen die Deklaration halten. Eine
+Beschreibung, die eine Beschränkung behauptet, macht sie nicht wahr — erst der Hook-Selbsttest
+(`python3 hooks/selbsttest.py`) zeigt, dass sie greift.
+
+## Konventionen für Agenten
+
+Alle Agenten folgen demselben Aufbau (Schema von `add-agent`):
+
+- **Englischer Name** — Dateiname, `name:`, Slash-Befehl. Inhalte sind deutsch.
+- **Vor dem Start, in dieser Reihenfolge:** Context lesen (fehlt er → Abbruch mit Verweis auf
+  `adopt`), eigenes Memory lesen, Abschnitte der Vorgänger in `agents.md` lesen, dann die
+  rollenspezifischen Quellen.
+- **Memory selbst verwaltet** unter `.claude/agent-memory/buchhaltung-kit-<agent>/` mit
+  `MEMORY.md` als Index. Der Pfad steht ausgeschrieben im Agenten, weil ein bekannter
+  Harness-Fehler injizierte Memory-Pfade für Plugin-Agenten unzuverlässig macht.
+- **Laufprotokoll:** Jeder Agent hängt an `agents.md` einen Abschnitt unter eigener
+  Überschrift an (`## <agent> — <zeitpunkt>`) und ändert nie fremde Abschnitte. Abweichung
+  von `add-agent`: Das Protokoll liegt im Laufverzeichnis des Zeitraums
+  (`.claude/buchhaltung-log/<zeitraum>/agents.md`), nicht unter `.claude/agents-log/`, weil
+  ein Lauf hier an einen Voranmeldungszeitraum gebunden ist.
+- **Ergebnisse** gehen als Bericht an die aufrufende Skill. Sie schreibt die Phasendateien
+  (`20-belege.jsonl`, `30-klassifikation.jsonl` …), denn diese sind der
+  Wiederaufnahmepunkt eines abgebrochenen Laufs.
+- **Ende:** Der Bericht schließt mit `FERTIG: <agent>`. Fehlt die Zeile, gilt der Agent als
+  abgebrochen.
 
 Was ein Hook durchsetzt und was nicht, steht in [`hooks/README.md`](hooks/README.md).
 

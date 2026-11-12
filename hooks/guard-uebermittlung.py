@@ -8,7 +8,7 @@ Was dieser Hook **nicht** kann: Ein Klick auf „Übermitteln" läuft über Bild
 Die Tool-Eingabe enthält dann nur x und y — keine URL, keinen Beschriftungstext, nichts
 Prüfbares. Dieser Hook ist deshalb eine Schranke an der Tür, kein Schloss am Knopf.
 Die eigentliche Absicherung ist die Anweisung in den Skills plus die nachträgliche
-Prüfung durch den monats-auditor.
+Prüfung durch den monthly-auditor.
 """
 import re, sys, os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))

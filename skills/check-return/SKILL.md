@@ -1,6 +1,6 @@
 ---
-name: abgleich
-description: "Gleicht die klassifizierten Belege gegen die Voranmeldung im Buchhaltungssystem ab: Kennziffern, Rundungsmodell, gegengleiche Positionen, offene Posten und Zuordnungsstatus. Meldet jede Abweichung mit Centbetrag. Triggers on: /buchhaltung-kit:abgleich <YYYY-MM>"
+name: check-return
+description: "Gleicht die klassifizierten Belege gegen die Voranmeldung im Buchhaltungssystem ab: Kennziffern, Rundungsmodell, gegengleiche Positionen, offene Posten und Zuordnungsstatus. Meldet jede Abweichung mit Centbetrag. Triggers on: /buchhaltung-kit:check-return <YYYY-MM>"
 disable-model-invocation: true
 ---
 
@@ -97,7 +97,7 @@ in der Bankansicht des Systems. Gliedere jeden nach Ursache:
 
 ```
 beleg_fehlt          Soll-Liste führt ihn als offen        → Vorsteuer fehlt in der Meldung
-beleg_unverknuepft   Beleg liegt im System, ohne Zuordnung → Zuordnung nachholen (erfassen)
+beleg_unverknuepft   Beleg liegt im System, ohne Zuordnung → Zuordnung nachholen (`record`)
 beleg_anderer_monat  Beleg datiert in einem anderen Zeitraum, etwa Rechnung 30.09., Zahlung 01.10.
 kein_beleg_erwartet  Steuer, Sozialversicherung, Lohn      → ohne Beleg zuordnen (Mensch)
 unerklaert           in keiner Liste                       → blockierend: die Soll-Liste ist unvollständig

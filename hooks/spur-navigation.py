@@ -3,7 +3,7 @@
 
 Weil der Klick auf „Übermitteln" nicht blockierbar ist (siehe guard-uebermittlung.py),
 muss wenigstens **nachweisbar** sein, wo gearbeitet wurde. Diese Spur liest der
-monats-auditor in Prüfung 6.
+monthly-auditor in Prüfung 6.
 
 Der Hook schreibt nur und blockiert nie. Er darf unter keinen Umständen einen Lauf
 aufhalten — deshalb fängt er jeden Fehler ab und endet still.

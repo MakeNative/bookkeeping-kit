@@ -1,6 +1,6 @@
 ---
-name: erfassen
-description: "Legt klassifizierte Belege im Buchhaltungssystem an — einzeln, mit Dublettenprüfung davor und Sichtprüfung danach. Schreibt fortlaufend mit, damit ein Abbruch ohne Doppelbuchung wiederaufgenommen werden kann. Triggers on: /buchhaltung-kit:erfassen <YYYY-MM>"
+name: record
+description: "Legt klassifizierte Belege im Buchhaltungssystem an — einzeln, mit Dublettenprüfung davor und Sichtprüfung danach. Schreibt fortlaufend mit, damit ein Abbruch ohne Doppelbuchung wiederaufgenommen werden kann. Triggers on: /buchhaltung-kit:record <YYYY-MM>"
 disable-model-invocation: true
 argument-hint: "<YYYY-MM>"
 ---

@@ -29,7 +29,20 @@ def durchlassen():
 
 
 def projektwurzel(daten):
-    return pathlib.Path(daten.get("cwd") or os.getcwd())
+    """Das Mandantenprojekt, auch wenn das Arbeitsverzeichnis darunter liegt.
+
+    `cwd` folgt jedem `cd` der Sitzung. Steht es im Laufordner, läge der Context sonst
+    „nicht da", und jeder Guard ließe alles durch. Deshalb nach oben suchen, dann
+    `CLAUDE_PROJECT_DIR` versuchen, zuletzt `cwd` selbst nehmen.
+    """
+    start = pathlib.Path(daten.get("cwd") or os.getcwd())
+    for d in (start, *start.parents):
+        if (d / CONTEXT).is_file():
+            return d
+    projekt = os.environ.get("CLAUDE_PROJECT_DIR")
+    if projekt and (pathlib.Path(projekt) / CONTEXT).is_file():
+        return pathlib.Path(projekt)
+    return start
 
 
 def belegordner(daten):

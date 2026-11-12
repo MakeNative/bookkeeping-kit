@@ -12,9 +12,10 @@ BLOCK, PASS = 2, 0
 
 
 def lauf(skript, daten, cwd):
+    env = {k: v for k, v in os.environ.items() if k != "CLAUDE_PROJECT_DIR"}
     p = subprocess.run([sys.executable, str(HOOKS / skript)],
                        input=json.dumps(daten), text=True,
-                       capture_output=True, cwd=cwd)
+                       capture_output=True, cwd=cwd, env=env)
     return p.returncode, (p.stderr or "").strip()
 
 
@@ -31,7 +32,7 @@ def mandant(tmp):
 
 
 FAELLE = [
-    # (Name, Skript, tool_name, tool_input-Vorlage, erwartet)
+    # (Name, Skript, tool_name, tool_input-Vorlage, erwartet[, agent_type, cwd-Unterordner])
     ("rm im Belegordner blockiert", "guard-originale.py", "Bash",
      {"command": "rm {EIN}/2026/beleg.pdf"}, BLOCK),
     ("mv im Belegordner blockiert", "guard-originale.py", "Bash",
@@ -63,6 +64,55 @@ FAELLE = [
      {"url": "https://app.example.com/voranmeldung/2026-09/senden"}, BLOCK),
     ("Steuererklaerung abgeben blockiert", "guard-uebermittlung.py", "WebFetch",
      {"url": "https://app.example.com/steuererklaerung/abgeben?id=7"}, BLOCK),
+
+    # Schreibrechte der Kit-Agenten
+    ("Agent: Write ins eigene Memory erlaubt", "guard-agenten.py", "Write",
+     {"file_path": "{ROOT}/.claude/agent-memory/buchhaltung-kit-receipt-reader/MEMORY.md"},
+     PASS, "buchhaltung-kit:receipt-reader"),
+    ("Agent: Write in fremdes Memory blockiert", "guard-agenten.py", "Write",
+     {"file_path": "{ROOT}/.claude/agent-memory/buchhaltung-kit-tax-classifier/MEMORY.md"},
+     BLOCK, "buchhaltung-kit:receipt-reader"),
+    ("Agent: Edit an agents.md des Laufs erlaubt", "guard-agenten.py", "Edit",
+     {"file_path": "{ROOT}/.claude/buchhaltung-log/2026-10/agents.md"},
+     PASS, "buchhaltung-kit:plausibility-gate"),
+    ("Agent: Phasendatei blockiert", "guard-agenten.py", "Write",
+     {"file_path": "{ROOT}/.claude/buchhaltung-log/2026-10/20-belege.jsonl"},
+     BLOCK, "buchhaltung-kit:receipt-reader"),
+    ("Agent: Context blockiert", "guard-agenten.py", "Edit",
+     {"file_path": "{ROOT}/.claude/docs/COMPANY_CONTEXT.md"},
+     BLOCK, "buchhaltung-kit:tax-classifier"),
+    ("Agent: Memory relativ aus Unterordner erlaubt", "guard-agenten.py", "Write",
+     {"file_path": "../agent-memory/buchhaltung-kit-monthly-auditor/MEMORY.md"},
+     PASS, "buchhaltung-kit:monthly-auditor", ".claude/buchhaltung-log"),
+    ("Agent: Pfad mit .. aus dem Memory heraus blockiert", "guard-agenten.py", "Write",
+     {"file_path": "{ROOT}/.claude/agent-memory/buchhaltung-kit-receipt-reader/../../docs/x.md"},
+     BLOCK, "buchhaltung-kit:receipt-reader"),
+    ("Agent: Evaluator schreibt buchhaltung-eval/agents.md", "guard-agenten.py", "Write",
+     {"file_path": "{ROOT}/.claude/buchhaltung-eval/agents.md"},
+     PASS, "buchhaltung-kit:agent-evaluator"),
+    ("Agent: Bash lesen erlaubt", "guard-agenten.py", "Bash",
+     {"command": "pdftotext -layout {EIN}/2026/a.pdf - 2>/dev/null | grep -n '<cbc:ID>' | head"},
+     PASS, "buchhaltung-kit:receipt-reader"),
+    ("Agent: Bash mit stderr-Umleitung erlaubt", "guard-agenten.py", "Bash",
+     {"command": "python3 tools/belege_lesen.py --zeitraum 2026-10 2>&1 | tail -5"},
+     PASS, "buchhaltung-kit:receipt-reader"),
+    ("Agent: Bash-Umleitung in Datei blockiert", "guard-agenten.py", "Bash",
+     {"command": "echo x > {ROOT}/.claude/docs/COMPANY_CONTEXT.md"},
+     BLOCK, "buchhaltung-kit:receipt-reader"),
+    ("Agent: Bash tee blockiert", "guard-agenten.py", "Bash",
+     {"command": "cat a.json | tee {ROOT}/.claude/buchhaltung-log/2026-10/20-belege.jsonl"},
+     BLOCK, "buchhaltung-kit:receipt-reader"),
+    ("Agent: Bash sed -i blockiert", "guard-agenten.py", "Bash",
+     {"command": "sed -i '' 's/a/b/' {ROOT}/.claude/docs/COMPANY_CONTEXT.md"},
+     BLOCK, "buchhaltung-kit:tax-classifier"),
+    ("Hauptkontext: Write ins Laufprotokoll erlaubt", "guard-agenten.py", "Write",
+     {"file_path": "{ROOT}/.claude/buchhaltung-log/2026-10/20-belege.jsonl"}, PASS, ""),
+    ("Fremder Agent unberührt", "guard-agenten.py", "Write",
+     {"file_path": "{ROOT}/.claude/docs/COMPANY_CONTEXT.md"}, PASS, "general-purpose"),
+
+    # Arbeitsverzeichnis unterhalb des Mandanten: Context wird trotzdem gefunden
+    ("Unterordner: Write in den Belegordner blockiert", "guard-originale.py", "Write",
+     {"file_path": "{EIN}/2026/neu.pdf", "content": "x"}, BLOCK, "", ".claude/buchhaltung-log"),
 ]
 
 
@@ -71,10 +121,16 @@ def main():
     with tempfile.TemporaryDirectory() as tmp:
         d = mandant(tmp)
         ein = f"{d}/Rechnungen"
-        for name, skript, tool, vorlage, erwartet in FAELLE:
+        (d / ".claude" / "buchhaltung-log").mkdir(parents=True, exist_ok=True)
+        for name, skript, tool, vorlage, erwartet, *rest in FAELLE:
+            typ = rest[0] if rest else ""
+            wo = d / rest[1] if len(rest) > 1 else d
             ti = {k: (v.replace("{EIN}", ein).replace("{ROOT}", str(d))
                       if isinstance(v, str) else v) for k, v in vorlage.items()}
-            rc, msg = lauf(skript, {"tool_name": tool, "tool_input": ti, "cwd": str(d)}, d)
+            daten = {"tool_name": tool, "tool_input": ti, "cwd": str(wo)}
+            if typ:
+                daten["agent_type"] = typ
+            rc, msg = lauf(skript, daten, wo)
             ok = rc == erwartet
             fehler += not ok
             print(f"  [{'OK  ' if ok else 'FEHL'}] {name}"

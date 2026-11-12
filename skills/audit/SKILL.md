@@ -26,7 +26,8 @@ prüfen, und das muss derjenige wissen, der die Voranmeldung freigibt.
 
 ## Schritt 2 — Monatsauditor
 
-Spawne `monats-auditor` mit Zeitraum, Pfad zum Laufverzeichnis und Pfad zum Belegordner.
+Spawne `monthly-auditor` mit dem Auftragsrahmen aus `monthly-run` (Abschnitt „Agenten starten“),
+dazu Pfad zum Laufverzeichnis und Pfad zum Belegordner.
 
 Gib ihm **keine** Zusammenfassung des Laufs mit. Seine Unabhängigkeit ist der Zweck der
 Rolle; ein mitgeliefertes Fazit zieht ihn in dieselbe Spur, die er prüfen soll.
@@ -35,7 +36,8 @@ Rolle; ein mitgeliefertes Fazit zieht ihn in dieselbe Spur, die er prüfen soll.
 
 Nur bei `--eval` oder wenn mindestens drei Läufe vorliegen.
 
-Spawne `agent-evaluator` über alle Laufverzeichnisse. Er bewertet die Pipeline, nicht den
+Spawne `agent-evaluator` über alle Laufverzeichnisse, mit dem Auftragsrahmen aus `monthly-run`;
+sein Protokoll ist `.claude/buchhaltung-eval/agents.md`. Er bewertet die Pipeline, nicht den
 Monat — zwei verschiedene Fragen, die nicht in einen Bericht gehören.
 
 ## Schritt 4 — Ergebnis schreiben

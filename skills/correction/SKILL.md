@@ -1,6 +1,6 @@
 ---
-name: korrektur
-description: "Bereitet die Berichtigung einer bereits übermittelten Voranmeldung vor: ermittelt Altstand und Neustand je Kennziffer, stellt die Differenz dar und bewertet, ob berichtigt werden muss. Übermittelt nichts. Triggers on: /buchhaltung-kit:korrektur <YYYY-MM>"
+name: correction
+description: "Bereitet die Berichtigung einer bereits übermittelten Voranmeldung vor: ermittelt Altstand und Neustand je Kennziffer, stellt die Differenz dar und bewertet, ob berichtigt werden muss. Übermittelt nichts. Triggers on: /buchhaltung-kit:correction <YYYY-MM>"
 disable-model-invocation: true
 argument-hint: "<YYYY-MM>"
 ---
@@ -50,7 +50,7 @@ die erst **nach** dem Zeitraum gilt, begründet keine Korrektur des Zeitraums.
 Vollständig neu aus den Belegen, nicht als Delta auf den Altstand. Ein Delta übernimmt jeden
 Fehler, der schon in der ersten Fassung steckte, ungeprüft.
 
-Lass dafür `abgleich` über den berichtigten Belegbestand laufen.
+Lass dafür `check-return` über den berichtigten Belegbestand laufen.
 
 ## Schritt 4 — Differenz darstellen
 

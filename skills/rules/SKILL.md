@@ -1,6 +1,6 @@
 ---
-name: regelwerk
-description: "Schlägt die umsatzsteuerlichen Regeln des Kits nach und hilft, neue Regeln aufzunehmen. Nutze dies, wenn eine Belegbehandlung begründet, eine Regel-ID aufgelöst oder eine Lücke im Regelwerk geschlossen werden soll. Triggers on: /buchhaltung-kit:regelwerk [Suchbegriff oder Regel-ID]"
+name: rules
+description: "Schlägt die umsatzsteuerlichen Regeln des Kits nach und hilft, neue Regeln aufzunehmen. Nutze dies, wenn eine Belegbehandlung begründet, eine Regel-ID aufgelöst oder eine Lücke im Regelwerk geschlossen werden soll. Triggers on: /buchhaltung-kit:rules [Suchbegriff oder Regel-ID]"
 ---
 
 Das Regelwerk steht in `docs/REGELWERK.md` des Plugins. Diese Skill bleibt bewusst dünn —

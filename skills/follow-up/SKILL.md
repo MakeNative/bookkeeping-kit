@@ -1,6 +1,6 @@
 ---
-name: nachtrag
-description: "Arbeitet das Register offener Punkte ab: Belege, die beim Monatslauf fehlten, Portale ohne Login, verspätet ausgestellte Rechnungen. Entscheidet je Fund, ob er in den alten Zeitraum gehört oder in den laufenden. Triggers on: /buchhaltung-kit:nachtrag [YYYY-MM]"
+name: follow-up
+description: "Arbeitet das Register offener Punkte ab: Belege, die beim Monatslauf fehlten, Portale ohne Login, verspätet ausgestellte Rechnungen. Entscheidet je Fund, ob er in den alten Zeitraum gehört oder in den laufenden. Triggers on: /buchhaltung-kit:follow-up [YYYY-MM]"
 disable-model-invocation: true
 argument-hint: "[YYYY-MM]"
 ---
@@ -13,12 +13,12 @@ seinen eigenen Zeitraum, und niemand kommt auf den vorherigen zurück.
 
 ## Eingabe
 
-`.claude/buchhaltung-offene-punkte.md` — das Register, das `sammeln` fortschreibt. Ohne
+`.claude/buchhaltung-offene-punkte.md` — das Register, das `collect` fortschreibt. Ohne
 Argument arbeitest du alle offenen Einträge ab, mit `YYYY-MM` nur die eines Zeitraums.
 
 ## Schritt 1 — Nachsehen
 
-Je offenem Eintrag die Quelle erneut prüfen, in der Reihenfolge aus `sammeln`: Ordner,
+Je offenem Eintrag die Quelle erneut prüfen, in der Reihenfolge aus `collect`: Ordner,
 Postfach, Portal. Portale erst zum Schluss und mit gebündeltem Login-Bedarf (P-02).
 
 ## Schritt 2 — Die eigentliche Frage: welcher Zeitraum?
@@ -29,7 +29,7 @@ Antworten — eine für die Umsatzsteuer, eine für die Ablage.
 | Lage | Zuordnung |
 |---|---|
 | Rechnung trägt ein Datum **im** alten Zeitraum, dieser ist **noch nicht** übermittelt | in den alten Zeitraum, normal erfassen |
-| Rechnung trägt ein Datum **im** alten Zeitraum, dieser ist **bereits** übermittelt | → `korrektur`, nicht hier |
+| Rechnung trägt ein Datum **im** alten Zeitraum, dieser ist **bereits** übermittelt | → `correction`, nicht hier |
 | Rechnung wurde **erst später ausgestellt** (Muster M-08, Regel E-12) | in den Zeitraum der Ausstellung — das ist keine Nachmeldung, sondern der richtige Monat |
 
 Der dritte Fall ist der häufigste und wird regelmäßig falsch behandelt: Eine Rechnung, die im
@@ -54,11 +54,11 @@ die Frage, ob es eilt.
 
 ## Schritt 4 — Erfassen
 
-Für Belege, die in einen **offenen** Zeitraum gehören: über die `erfassen`-Skill, mit
+Für Belege, die in einen **offenen** Zeitraum gehören: über die `record`-Skill, mit
 derselben Dublettenprüfung. Ein nachgetragener Beleg ist der klassische Kandidat für eine
 Doppelbuchung, weil zwischen Erstlauf und Nachtrag Zeit vergangen ist (P-04).
 
-Für Belege in einen bereits übermittelten Zeitraum: nicht erfassen, sondern an `korrektur`
+Für Belege in einen bereits übermittelten Zeitraum: nicht erfassen, sondern an `correction`
 übergeben.
 
 ## Schritt 5 — Register fortschreiben
@@ -76,7 +76,7 @@ die Erwartung zu streichen, statt sie weiterzuschleppen.
 <n> offene Punkte geprüft
 
 Erledigt
-  <lieferant> — <datei> — Zeitraum <x> — <erfasst|an korrektur>
+  <lieferant> — <datei> — Zeitraum <x> — <erfasst|an correction>
 
 Weiter offen
   <lieferant> — <grund> — nächste Prüfung <datum> — <n>. Versuch

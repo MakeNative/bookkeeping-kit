@@ -6,7 +6,7 @@ STAND: 2026-10
 GELTUNG: Deutschland, Regelbesteuerung
 ```
 
-Dieses Dokument ist die Entscheidungsgrundlage des `steuer-klassifizierer`. Es ist
+Dieses Dokument ist die Entscheidungsgrundlage des `tax-classifier`. Es ist
 **mandantenneutral** — keine Firmennamen, keine Kontonummern, keine Ordnerpfade. Alles
 Mandantenspezifische steht in `COMPANY_CONTEXT.md` des jeweiligen Projekts.
 

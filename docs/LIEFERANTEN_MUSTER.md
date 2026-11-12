@@ -93,7 +93,7 @@ ein Muster zu und schreibt das Ergebnis in `COMPANY_CONTEXT.md` — mit Beleg-Qu
 Login-Bedarf und Besonderheiten. Je Lieferant werden genau zwei Dinge erfragt, die sich nicht
 aus dem Beleg ergeben: **wo die Rechnung liegt** und **ob ein Login nötig ist**.
 
-Der `steuer-klassifizierer` bestätigt die Zuordnung bei jedem Lauf am konkreten Beleg
+Der `tax-classifier` bestätigt die Zuordnung bei jedem Lauf am konkreten Beleg
 (Regel B-01) und hält im Mandantenkontext fest, wann sie zuletzt bestätigt wurde. Anbieter
 wechseln ihre Abrechnungsgesellschaft — ein einmal gesetztes Muster ist eine Vermutung, kein
 Dauerzustand.

@@ -1,6 +1,6 @@
 ---
-name: sammeln
-description: "Stellt für einen Zeitraum zusammen, welche Belege es geben müsste und welche davon vorliegen — aus Belegordner, Postfächern, Anbieterportalen und Zahlungsmeldungen. Erzeugt die Soll-Liste und fordert nötige Logins gebündelt an. Triggers on: /buchhaltung-kit:sammeln <YYYY-MM>"
+name: collect
+description: "Stellt für einen Zeitraum zusammen, welche Belege es geben müsste und welche davon vorliegen — aus Belegordner, Postfächern, Anbieterportalen und Zahlungsmeldungen. Erzeugt die Soll-Liste und fordert nötige Logins gebündelt an. Triggers on: /buchhaltung-kit:collect <YYYY-MM>"
 disable-model-invocation: true
 ---
 
@@ -9,7 +9,7 @@ fehlt und warum.
 
 Diese Skill läuft im Hauptkontext, weil Portale Logins brauchen und ein Subagent dich nicht
 fragen kann. Die datenintensiven Teile — Ordner durchsehen, Postfächer durchsuchen — lagerst
-du aus, indem du den `beleg-leser` einsetzt oder Suchen bündelst.
+du aus, indem du den `receipt-reader` einsetzt oder Suchen bündelst.
 
 ## Grundsatz
 

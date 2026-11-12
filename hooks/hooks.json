@@ -20,6 +20,16 @@
             "timeout": 10
           }
         ]
+      },
+      {
+        "matcher": "Bash|Write|Edit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/guard-agenten.py\"",
+            "timeout": 10
+          }
+        ]
       }
     ],
     "PostToolUse": [
