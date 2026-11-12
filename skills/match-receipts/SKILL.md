@@ -106,7 +106,7 @@ von `check-return` Prüfung 7, damit Anfang und Ende dieselbe Sprache sprechen:
 
 | Status | Erkennung | Weiter mit |
 |---|---|---|
-| `kein_beleg_erwartet` | Finanzamt, Krankenkasse, Künstlersozialkasse, Lohn, Umbuchung | Schritt 6 |
+| `kein_beleg_erwartet` | Finanzamt, Krankenkasse, Künstlersozialkasse, Lohn, Umbuchung — **erst** prüfen, ob das System dafür einen Beleg hat (Lohnbelege `LG-…`/`LS-…`, Steuerbescheide); dann `beleg_unverknuepft` | Schritt 6 |
 | `beleg_unverknuepft` | passender Beleg liegt im System, auch unter „zu prüfen" | Schritt 5 |
 | `beleg_anderer_monat` | passender Beleg mit Datum in einem anderen Zeitraum | Schritt 5 bzw. `correction` |
 | `beleg_fehlt` | alles andere | Schritt 2 |

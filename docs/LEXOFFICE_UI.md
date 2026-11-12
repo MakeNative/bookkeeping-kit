@@ -101,6 +101,16 @@ Die Belegliste nimmt Dateien per Datei-Eingabefeld entgegen — PDF, JPEG, PNG *
 Der XML-Pfad ist für strukturierte E-Rechnungen der verlässlichere (→ Regelwerk B-03).
 Mehrere Dateien gleichzeitig sind möglich und deutlich schneller als einzeln.
 
+## Reverse-Charge-Kategorien lassen sich nicht aufteilen
+
+Eine §13b-Kategorie (etwa „Lizenzen und Konzessionen §13b Drittland“) nimmt keine zweite
+Position an. „Betrag aufteilen“ meldet dann, die Aufteilung sei bei dieser Kategorie nicht
+möglich. Eine Klassifikation, die §13b auf einen Teilbetrag und den Rest als Aufwand ohne
+Vorsteuer verlangt, lässt sich in **einem** Beleg nicht erfassen. Beobachtet 2026-11 bei einer
+Vercel-Rechnung mit ausgewiesener DE-USt und RC-Satz. Der Klassifizierer legt deshalb nur
+Optionen vor, die als ein Beleg erfassbar sind, oder sagt ausdrücklich, dass es zwei Belege
+bräuchte.
+
 ## Bankvorschläge beim Speichern
 
 Zeigt der Beleg-Editor einen Bankvorschlag an, **übernimmt das Speichern ihn**, ohne eigene

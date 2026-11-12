@@ -163,6 +163,12 @@ auswirkung      Centbetrag, um den sich die Zahllast je Option unterscheidet
 Sag, wenn der Unterschied bei null liegt — bei zahllastneutralen Sachverhalten (§ 13b,
 ig. Erwerb) ist das häufig so, und dann ist die Frage weniger dringend als sie aussieht.
 
+## Erfassbarkeit
+
+Schlag keine Behandlung vor, die das Buchhaltungssystem in einem Beleg nicht abbilden kann.
+In Lexoffice lässt sich eine §13b-Kategorie nicht mit einer zweiten Position aufteilen
+(`docs/LEXOFFICE_UI.md`). Bräuchte eine Option das, nenne es in der Vorlage.
+
 ## Fremdwährung
 
 Rechne nicht selbst um. Verlange den tatsächlichen Abrechnungsbetrag aus einem Beleg oder

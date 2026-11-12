@@ -114,6 +114,11 @@ zu Ende.
   Postfach empfängt oft mehrere Adressen und Weiterleitungen — dass eine Adresse nicht als
   eigenes Konto verbunden ist, heißt nicht, dass ihre Mails fehlen.
 - Treffer seitenweise abarbeiten, bis keine Folgeseite mehr kommt.
+- Eine Rechnung, die nur als HTML-Mail existiert, sicherst du als PDF: Kopf mit Absender,
+  Empfänger, Datum und Gmail-Nachrichten-ID, darunter der Mailtext unverändert, umgewandelt
+  mit `cupsfilter`. So bleibt sie hochladbar und auf die Mail zurückführbar.
+- Eine Zahlungsmail mit Link zur Rechnung („receipt here“) ist ein Wegweiser, kein Beleg: den
+  Bezugsweg ins Portal daraus ableiten (Schritt 2).
 
 ### Wann `fehlt` zulässig ist
 
