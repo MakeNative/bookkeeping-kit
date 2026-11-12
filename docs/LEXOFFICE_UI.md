@@ -101,6 +101,14 @@ Die Belegliste nimmt Dateien per Datei-Eingabefeld entgegen — PDF, JPEG, PNG *
 Der XML-Pfad ist für strukturierte E-Rechnungen der verlässlichere (→ Regelwerk B-03).
 Mehrere Dateien gleichzeitig sind möglich und deutlich schneller als einzeln.
 
+## Bankvorschläge beim Speichern
+
+Zeigt der Beleg-Editor einen Bankvorschlag an, **übernimmt das Speichern ihn**, ohne eigene
+Rückfrage. Der Vorschlag kann falsch sein: beobachtet wurde eine Amazon-Zahlung als Vorschlag
+für eine Sortlist-Rechnung gleichen Betrags. Den richtigen Umsatz schlägt das System dann
+nicht vor; er bleibt in der Bankansicht offen. Deshalb Vorschlag vor dem Speichern prüfen und
+den passenden Umsatz notfalls selbst suchen (→ erfassen, Schritt 3b).
+
 ## Was nicht geht
 
 Kein Verschieben eines Belegs aus der Belegliste in eine reine Dokumentenablage. Für

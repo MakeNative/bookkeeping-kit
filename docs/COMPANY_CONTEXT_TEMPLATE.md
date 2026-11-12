@@ -1,7 +1,7 @@
 # COMPANY_CONTEXT — Vorlage
 
 ```
-CONTRACT_VERSION: 1
+CONTRACT_VERSION: 2
 ```
 
 Diese Datei wird von `/buchhaltung-kit:adopt` im **Mandantenprojekt** erzeugt und liegt dort
@@ -16,7 +16,7 @@ Fehlt die Datei, bricht jeder Lauf ab.
 ---
 
 ```yaml
-CONTRACT_VERSION: 1
+CONTRACT_VERSION: 2
 REGELWERK_VERSION: 1          # Version, unter der zuletzt gebucht wurde
 
 unternehmen:
@@ -64,7 +64,11 @@ zahlungsquellen:
     benachrichtigung:          # woher die Zahlungsmeldungen kommen (Mail-Absender o. Ä.)
 
 mail:
-  konten: []                   # Postfächer, in denen Rechnungen eingehen
+  konten:                      # Postfächer, in denen Rechnungen eingehen
+    - adresse:
+      verbunden:               # ja | nein — durchsuchbar über die Mail-Anbindung
+      empfaengt: []            # alle Adressen, deren Mails hier ankommen (Aliasse,
+                               # Weiterleitungen) — von adopt geprüft, nicht erfragt
 
 lieferanten:
   # Wiederkehrende Lieferanten. Wächst durch den Lauf; bekannte Anbieter-Fakten
@@ -74,7 +78,9 @@ lieferanten:
       behandlung:              # inland_19 | inland_7 | §13b_eu | §13b_drittland
                                # | ig_erwerb | kein_vorsteuerabzug | pro_rechnung_pruefen
       kategorie:               # Kategoriename im Buchhaltungssystem
-      beleg_quelle:            # Portal-URL oder Mail-Absender
+      beleg_quelle:            # Mail-Absender oder Portal — der übliche Weg
+      portal:                  # Rechnungsseite im Anbieterkonto, auch wenn die Rechnung
+                               # meist per Mail kommt: der Weg, wenn die Mail ausbleibt
       login:                   # ja | nein
       zwei_faktor:             # ja | nein
       domain_freigabe_noetig:  # ja | nein — Browser-Erweiterung

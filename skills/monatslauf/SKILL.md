@@ -74,6 +74,15 @@ nötig, `05-login-bedarf.md`.
 Jeder Eintrag der Soll-Liste hat einen Status. Zulässig ohne Beleg sind nur
 `noch_nicht_ausgestellt`, `kein_beleg_erwartet` und `ausgeschlossen` — jeweils mit Begründung.
 
+**Erst nachsuchen, dann urteilen.** Bevor Gate A einen Posten als offen führt:
+
+- Jeder `fehlt` braucht ein ausgefülltes `versucht` mit Portalversuch (sammeln, Schritt 4).
+  Fehlt der Portalversuch → zurück an `sammeln`, nur für diese Posten.
+- Hat der Nutzer sich zwischendurch angemeldet, werden **alle** `portal_login_noetig` erneut
+  versucht, nicht nur die Portale der ersten Login-Liste.
+
+Erst was danach noch fehlt, ist offen.
+
 - Alles sauber → weiter.
 - Offene Posten → **nicht den ganzen Lauf stoppen.** Rechne mit dem Vorhandenen weiter und
   merke dir, dass Phase 4 für die betroffenen Belege gesperrt ist. Der Mensch sieht so das

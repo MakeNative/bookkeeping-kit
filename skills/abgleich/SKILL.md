@@ -91,6 +91,22 @@ Prüfe zusätzlich den Nummernkreis der Ausgangsrechnungen auf Lücken und auf S
 Belege, die keinem Kontoumsatz zugeordnet sind, blähen die offenen Posten auf — und die sind
 bei Ist-Versteuerung die Grundlage von Prüfung 6. Melde unzugeordnete Belege.
 
+Prüfe auch die Gegenrichtung: **Kontoumsätze des Zeitraums ohne Zuordnung.** Jeder davon ist
+entweder ein Beleg, der fehlt, oder eine Verknüpfung, die fehlt — beides sieht man sonst erst
+in der Bankansicht des Systems. Gliedere jeden nach Ursache:
+
+```
+beleg_fehlt          Soll-Liste führt ihn als offen        → Vorsteuer fehlt in der Meldung
+beleg_unverknuepft   Beleg liegt im System, ohne Zuordnung → Zuordnung nachholen (erfassen)
+beleg_anderer_monat  Beleg datiert in einem anderen Zeitraum, etwa Rechnung 30.09., Zahlung 01.10.
+kein_beleg_erwartet  Steuer, Sozialversicherung, Lohn      → ohne Beleg zuordnen (Mensch)
+unerklaert           in keiner Liste                       → blockierend: die Soll-Liste ist unvollständig
+```
+
+`unerklaert` blockiert, weil dann die Erwartung aus Phase 1 nicht alle Zahlungen kennt. Die
+Summe je Ursache gehört in den Bericht. Umsätze früherer Zeiträume nur zählen und auf das
+Register verweisen, sie gehören in die Korrektur.
+
 ### 8. Zusammenfassende Meldung
 
 Gibt es Ausgangsumsätze an Kunden mit ausländischer USt-IdNr., weise auf die getrennte

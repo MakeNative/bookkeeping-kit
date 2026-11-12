@@ -58,7 +58,11 @@ Frage nach Banken, Kreditkarten und Zahlungsdiensten und danach, **wo deren Bena
 eingehen** (Postfach, Absenderadresse). Diese Quellen speisen später die Vollständigkeits-
 prüfung — nicht der Ordnerinhalt (Regel P-06).
 
-Frage ebenfalls nach den Postfächern, in denen Rechnungen eingehen.
+Frage ebenfalls nach den Postfächern, in denen Rechnungen eingehen. Prüfe danach selbst,
+**welche Adressen** in jedem verbundenen Postfach ankommen: Empfänger der Mails der letzten
+drei Monate auszählen. Aliasse und Weiterleitungen tauchen dabei auf, und ein Postfach, das
+nicht verbunden ist, kann trotzdem längst mitgelesen werden. Trag das als
+`mail.konten[].empfaengt` ein.
 
 ## Schritt 4 — Lieferanten-Inventur
 
@@ -72,6 +76,9 @@ Behandlung und Kategorie ab.
 Frage je Lieferant **nur zwei Dinge**, die nicht auf dem Beleg stehen:
 1. Wo liegt die Rechnung? (Portal-URL oder Mail-Absender)
 2. Braucht es dafür ein Login?
+
+Kommt die Rechnung per Mail, ermittle trotzdem die Rechnungsseite im Anbieterkonto und trag
+sie als `portal` ein. Sie ist der Ausweg in dem Monat, in dem die Mail fehlt.
 
 Ergänze, was du beim Öffnen selbst feststellst: Zwei-Faktor, Domain-Freigabe der
 Browser-Erweiterung nötig, Passkey-Pflicht angekündigt.

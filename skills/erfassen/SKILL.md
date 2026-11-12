@@ -79,6 +79,22 @@ Ein Klick, der nicht gelandet ist, sieht aus wie ein Klick, der gelandet ist.
 Zwei hinzugekommene Belege → sofort anhalten und melden. Weiterarbeiten vervielfacht den
 Fehler.
 
+### 3b. Zahlung zuordnen
+
+Ein gebuchter Beleg ohne Kontoumsatz bleibt in der Bankansicht offen, und der Umsatz auch.
+Prüfe den Bankvorschlag **vor** dem Speichern, denn das Speichern kann ihn übernehmen
+(`docs/LEXOFFICE_UI.md`).
+
+- Vorschlag passt (Lieferant, Betrag, Datum im Fenster −10 bis +5 Tage) → übernehmen.
+- Vorschlag passt nicht → ablehnen **und** den passenden Umsatz selbst suchen: offene
+  Kontoumsätze des Zeitraums mit gleichem Betrag (bei Fremdwährung: Belastung laut Bank) und
+  passendem Empfänger.
+- Genau ein Treffer → zuordnen, sofern die Freigabe des Laufs das deckt. Mehrere oder keiner
+  → nicht raten; als `zuordnung_offen` mit den Kandidaten mitschreiben.
+
+Was die Freigabe deckt, legt der Mensch einmal je Lauf fest (etwa „nur bei exaktem Betrag und
+Lieferanten"). Frag das **vor** dem ersten Beleg, nicht beim ersten Treffer.
+
 ### 4. Mitschreiben — sofort, nicht am Ende
 
 Hänge **nach jedem Beleg** eine Zeile an `.claude/buchhaltung-log/<zeitraum>/40-erfassung.jsonl`:
@@ -87,6 +103,7 @@ Hänge **nach jedem Beleg** eine Zeile an `.claude/buchhaltung-log/<zeitraum>/40
 datei · lieferant · belegnummer · belegdatum · betrag · waehrung
 behandlung · kategorie · regel
 status      angelegt | bereits_vorhanden | uebersprungen | fehlgeschlagen
+zuordnung   zugeordnet <umsatz> | zuordnung_offen <kandidaten> | keine_zahlung
 beleg_id    Kennung im System
 zeitpunkt
 begruendung bei allem außer "angelegt"
