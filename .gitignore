@@ -6,7 +6,7 @@ __pycache__/
 # Belegdaten, Laufprotokolle und Firmenkontexte liegen im jeweiligen
 # Mandantenprojekt unter .claude/ und gehören dort in dessen .gitignore.
 COMPANY_CONTEXT.md
-buchhaltung-log/
-buchhaltung-eval/
-buchhaltung-offene-punkte.md
+bookkeeping-log/
+bookkeeping-eval/
+bookkeeping-open-items.md
 *.belege.jsonl

@@ -1,6 +1,6 @@
 ---
 name: match-receipts
-description: "Führt den Menschen in einem Durchgang von den offenen Kontoumsätzen im Buchhaltungssystem zu hochgeladenen, verknüpften Belegen: Umsätze ziehen, fehlende Belege bestimmen, aus Postfächern und Portalen holen, ablegen, auslesen, klassifizieren, hochladen und mit der Zahlung verbinden. Ruft dafür die vorhandenen Skills und Agenten des Kits auf und holt den Menschen nur dazu, wenn sein Input nötig ist. Triggers on: /buchhaltung-kit:match-receipts [YYYY-MM]"
+description: "Führt den Menschen in einem Durchgang von den offenen Kontoumsätzen im Buchhaltungssystem zu hochgeladenen, verknüpften Belegen: Umsätze ziehen, fehlende Belege bestimmen, aus Postfächern und Portalen holen, ablegen, auslesen, klassifizieren, hochladen und mit der Zahlung verbinden. Ruft dafür die vorhandenen Skills und Agenten des Kits auf und holt den Menschen nur dazu, wenn sein Input nötig ist. Triggers on: /bookkeeping-kit:match-receipts [YYYY-MM]"
 disable-model-invocation: true
 argument-hint: "[YYYY-MM]"
 ---
@@ -49,7 +49,7 @@ arbeitest du durch, ohne Rückfrage. Gib nie Zugangsdaten ein (P-02).
 
 ## Laufdateien
 
-Im Laufverzeichnis `.claude/buchhaltung-log/<zeitraum>/`. Die Dateien der aufgerufenen Skills
+Im Laufverzeichnis `.claude/bookkeeping-log/<zeitraum>/`. Die Dateien der aufgerufenen Skills
 (`10-soll-liste.md`, `20-belege.jsonl`, `30-klassifikation.jsonl`, `40-erfassung.jsonl`,
 `agents.md`) entstehen dort wie gewohnt; bestehende werden fortgeschrieben, nicht ersetzt.
 Eigene Datei dieses Durchgangs:
@@ -147,7 +147,7 @@ Schlusskontrolle: `check-return` **Prüfung 7** gegen den Systemstand, nicht geg
 Datei. Jeder Umsatz des Zeitraums ist verknüpft oder hat einen benannten Grund. Ein
 `unerklaert` ist ein Befund.
 
-Offenes schreibst du ins Register `.claude/buchhaltung-offene-punkte.md` (`collect`
+Offenes schreibst du ins Register `.claude/bookkeeping-open-items.md` (`collect`
 Schritt 6); dort holt `follow-up` es beim nächsten Mal ab.
 
 ## Bericht

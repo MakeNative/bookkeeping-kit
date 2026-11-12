@@ -1,6 +1,6 @@
 ---
 name: monthly-run
-description: "Führt den vollständigen Lauf für einen Voranmeldungszeitraum: sammeln, auslesen, prüfen, klassifizieren, erfassen, abgleichen, auditieren. Mit --trocken wird gerechnet, aber nichts geschrieben. Triggers on: /buchhaltung-kit:monthly-run <YYYY-MM> [--trocken]"
+description: "Führt den vollständigen Lauf für einen Voranmeldungszeitraum: sammeln, auslesen, prüfen, klassifizieren, erfassen, abgleichen, auditieren. Mit --trocken wird gerechnet, aber nichts geschrieben. Triggers on: /bookkeeping-kit:monthly-run <YYYY-MM> [--trocken]"
 disable-model-invocation: true
 argument-hint: "<YYYY-MM> [--trocken]"
 ---
@@ -17,7 +17,7 @@ unter `.claude/` des Mandanten.
 Suche `.claude/docs/COMPANY_CONTEXT.md` **relativ zum Arbeitsverzeichnis**. Fehlt sie,
 unterscheide zwei Lagen, bevor du etwas behauptest:
 
-- Es gibt sie nirgends → der Mandant ist nicht eingerichtet → `/buchhaltung-kit:adopt`.
+- Es gibt sie nirgends → der Mandant ist nicht eingerichtet → `/bookkeeping-kit:adopt`.
 - Du stehst im falschen Verzeichnis (etwa im Plugin-Repo) → **sag das**, nenne den Pfad, den
   du geprüft hast, und frag nach dem Mandantenprojekt. Auf `adopt` zu verweisen wäre hier
   falsch und würde einen bestehenden Context überschreiben.
@@ -33,7 +33,7 @@ sein Protokoll nicht oder antwortet in einem Format, das du nicht wegschreiben k
 ```
 Zeitraum      <JJJJ-MM>
 Projektwurzel <absoluter Pfad des Mandantenprojekts>
-Protokoll     .claude/buchhaltung-log/<zeitraum>/agents.md — lies die Abschnitte vor dir,
+Protokoll     .claude/bookkeeping-log/<zeitraum>/agents.md — lies die Abschnitte vor dir,
               hänge deinen unter "## <agent> — <zeitpunkt>" an
 Lies          <Phasendateien und Belegpfade, die er braucht>
 Liefere       <Rückgabeformat laut Agent>, Ende mit "FERTIG: <agent>"
@@ -48,7 +48,7 @@ neu starten oder den Abbruch im Bericht nennen.
 muss eine Spur hinterlassen — sonst ist später nicht nachvollziehbar, dass und warum er
 versucht wurde.
 
-1. Laufverzeichnis `.claude/buchhaltung-log/<zeitraum>/` anlegen und `00-lauf.md` beginnen:
+1. Laufverzeichnis `.claude/bookkeeping-log/<zeitraum>/` anlegen und `00-lauf.md` beginnen:
    Zeitraum, Modus, Startzeit. Alles Weitere wird **angehängt**, auch ein Abbruch.
 2. Zeitraum und Modus festhalten.
 3. `COMPANY_CONTEXT.md` lesen. **Besteuerungsart, Turnus und Dauerfristverlängerung gegen das
@@ -56,7 +56,7 @@ versucht wurde.
    Befund, bevor irgendetwas gerechnet wird (G-01).
 4. Meldestatus prüfen: Ist der Zeitraum schon übermittelt? Dann ist dies ein
    Korrekturvorgang → Abbruchgrund **in `00-lauf.md` festhalten**, auf
-   `/buchhaltung-kit:correction` verweisen und abbrechen.
+   `/bookkeeping-kit:correction` verweisen und abbrechen.
 5. `REGELWERK_VERSION` aus Plugin und Context vergleichen. Drift melden — und zwar mit
    beiden Ständen und dem Hinweis, dass Regeln nur ab ihrem `gilt_ab` wirken.
 

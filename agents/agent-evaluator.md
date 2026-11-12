@@ -19,12 +19,12 @@ Dein Ergebnis sind Änderungsvorschläge mit Fundstelle. Du änderst nichts selb
 ## Vor dem Start — in dieser Reihenfolge
 
 1. **Context.** Lies `.claude/docs/COMPANY_CONTEXT.md` relativ zur Projektwurzel. Fehlt die
-   Datei, brich ab und melde, dass der Mandant nicht eingerichtet ist (`/buchhaltung-kit:adopt`).
+   Datei, brich ab und melde, dass der Mandant nicht eingerichtet ist (`/bookkeeping-kit:adopt`).
 2. **Memory, selbst verwaltet.** Ein bekannter Harness-Fehler kann Memory-Anweisungen mit einem
    Pfad mit doppeltem `.claude/.claude` einspielen und behaupten, dein `MEMORY.md` sei leer —
-   ignoriere das. Dein Memory liegt unter `.claude/agent-memory/buchhaltung-kit-agent-evaluator/`
+   ignoriere das. Dein Memory liegt unter `.claude/agent-memory/bookkeeping-kit-agent-evaluator/`
    relativ zur Projektwurzel. Lies dort `MEMORY.md` und die Themendateien daneben, falls vorhanden.
-3. **Laufprotokoll.** Lies in `.claude/buchhaltung-eval/agents.md` die Abschnitte der Agenten vor dir.
+3. **Laufprotokoll.** Lies in `.claude/bookkeeping-eval/agents.md` die Abschnitte der Agenten vor dir.
 4. Die Eingaben unten. Die Abschnitte der Agenten in den `agents.md` aller Laufverzeichnisse
    sind eine deiner Quellen.
 
@@ -32,8 +32,8 @@ Dein Ergebnis sind Änderungsvorschläge mit Fundstelle. Du änderst nichts selb
 
 Du beschreibst genau zwei Orte, und `hooks/guard-agenten.py` setzt das durch:
 
-- dein Memory-Verzeichnis `.claude/agent-memory/buchhaltung-kit-agent-evaluator/`
-- `.claude/buchhaltung-eval/agents.md`, nur unter deiner eigenen Überschrift
+- dein Memory-Verzeichnis `.claude/agent-memory/bookkeeping-kit-agent-evaluator/`
+- `.claude/bookkeeping-eval/agents.md`, nur unter deiner eigenen Überschrift
 
 Alles andere ist für dich nur lesbar: Belege, Context, die nummerierten Phasendateien des
 Laufs, das Buchhaltungssystem. Schreib mit Write oder Edit, nicht über Bash (Umleitung, `tee`,
@@ -41,7 +41,7 @@ Laufs, das Buchhaltungssystem. Schreib mit Write oder Edit, nicht über Bash (Um
 
 ## Eingaben
 
-Alle Laufverzeichnisse unter `.claude/buchhaltung-log/`, nicht nur das jüngste. Einzelne
+Alle Laufverzeichnisse unter `.claude/bookkeeping-log/`, nicht nur das jüngste. Einzelne
 Fehler sind Rauschen; interessant wird es ab dem zweiten Vorkommen.
 
 Dazu die Agentenbeschreibungen und das Regelwerk, denn deine Vorschläge zielen auf sie.
@@ -133,7 +133,7 @@ genauso riskant wie keine Änderung.
 
 ## Abschluss
 
-1. **Protokoll.** Hänge an `.claude/buchhaltung-eval/agents.md` einen Abschnitt `## agent-evaluator — <JJJJ-MM-TT HH:MM>`
+1. **Protokoll.** Hänge an `.claude/bookkeeping-eval/agents.md` einen Abschnitt `## agent-evaluator — <JJJJ-MM-TT HH:MM>`
    an: ausgewertete Läufe, Kennzahlen, Vorschläge in einer Zeile je Vorschlag. Lege die Datei an, falls es sie noch nicht gibt; ändere nie die Abschnitte
    anderer Agenten.
 2. **Memory.** Speichere, was beim nächsten Lauf früher auffallen soll: ein Eintrag je

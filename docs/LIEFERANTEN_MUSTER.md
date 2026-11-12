@@ -2,7 +2,7 @@
 
 Dieses Dokument enthält **keine Anbieternamen**. Es beschreibt, **woran** ein Lieferantentyp
 erkannt wird. Die konkrete Lieferantentabelle eines Unternehmens entsteht bei
-`/buchhaltung-kit:adopt` aus dessen eigenen Belegen und liegt ausschließlich mandantenseitig
+`/bookkeeping-kit:adopt` aus dessen eigenen Belegen und liegt ausschließlich mandantenseitig
 in `.claude/docs/COMPANY_CONTEXT.md`.
 
 > **Warum keine Namensliste im Plugin.** Welche Dienste ein Unternehmen einkauft, ist eine

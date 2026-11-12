@@ -17,7 +17,7 @@ try:
     ti = daten.get("tool_input") or {}
     url = ti.get("url") or ti.get("uri")
     if url:
-        ziel = projektwurzel(daten) / ".claude" / "buchhaltung-log"
+        ziel = projektwurzel(daten) / ".claude" / "bookkeeping-log"
         ziel.mkdir(parents=True, exist_ok=True)
         zeile = {
             "zeit": datetime.datetime.now().isoformat(timespec="seconds"),

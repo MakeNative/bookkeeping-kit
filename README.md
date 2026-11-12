@@ -1,4 +1,4 @@
-# buchhaltung-agent-kit
+# bookkeeping-agent-kit
 
 Agenten-Pipeline für die monatliche **Umsatzsteuer-Voranmeldung**: Belege und Zahlungen
 sammeln, auslesen, umsatzsteuerlich klassifizieren, im Buchhaltungssystem erfassen und
@@ -8,7 +8,7 @@ gegenprüfen — mit Regelwerk, Quality Gates, Audit und Eval.
 liegt im jeweiligen Mandantenprojekt unter `.claude/docs/COMPANY_CONTEXT.md`. Dasselbe Kit
 bedient beliebig viele Unternehmen.
 
-> Status: **vollständig angelegt** (v0.4.0). Alle Phasen, Gates, Hooks und Agenten sind
+> Status: **vollständig angelegt** (v0.5.0). Alle Phasen, Gates, Hooks und Agenten sind
 > beschrieben. Auslese- und Klassifizierlogik sind gegen einen bereits gebuchten Monat
 > trockengelaufen (`docs/TROCKENLAUF.md`); 
 
@@ -36,14 +36,14 @@ Klick in einer Oberfläche enthält nur Koordinaten. Das ist offengelegt statt �
 ## Installation
 
 ```bash
-/plugin marketplace add MakeNative/buchhaltung-agent-kit
-/plugin install buchhaltung-kit@buchhaltung-agent-kit
+/plugin marketplace add MakeNative/bookkeeping-agent-kit
+/plugin install bookkeeping-kit@bookkeeping-agent-kit
 ```
 
 Danach im Mandantenprojekt:
 
 ```
-/buchhaltung-kit:adopt
+/bookkeeping-kit:adopt
 ```
 
 `adopt` liest Besteuerungsart, Kontenrahmen und Steuernummer **aus dem Buchhaltungssystem
@@ -55,8 +55,8 @@ aus** statt sie zu erfragen, nimmt Ordner, Zahlungsquellen und Lieferanten auf u
 ## Monatslauf
 
 ```
-/buchhaltung-kit:monthly-run 2026-09 --trocken    # rechnet durch, schreibt nichts
-/buchhaltung-kit:monthly-run 2026-09              # mit Erfassung
+/bookkeeping-kit:monthly-run 2026-09 --trocken    # rechnet durch, schreibt nichts
+/bookkeeping-kit:monthly-run 2026-09              # mit Erfassung
 ```
 
 | Phase | Ausführender | Form |
@@ -76,7 +76,7 @@ aus** statt sie zu erfragen, nimmt Ordner, Zahlungsquellen und Lieferanten auf u
 ## Belege zu Kontoumsätzen
 
 ```
-/buchhaltung-kit:match-receipts 2026-10
+/bookkeeping-kit:match-receipts 2026-10
 ```
 
 Geführter Durchgang, der bei den **offenen Kontoumsätzen** im Buchhaltungssystem beginnt und
@@ -93,10 +93,10 @@ danach die Voranmeldung.
 ## Weitere Befehle
 
 ```
-/buchhaltung-kit:follow-up          # offene Punkte abarbeiten, Zeitraum zuordnen
-/buchhaltung-kit:correction 2026-09 # bereits übermittelter Zeitraum: Differenz vorbereiten
-/buchhaltung-kit:audit 2026-09      # unabhängige Nachprüfung, --eval für die Pipeline
-/buchhaltung-kit:rules              # Regeln nachschlagen
+/bookkeeping-kit:follow-up          # offene Punkte abarbeiten, Zeitraum zuordnen
+/bookkeeping-kit:correction 2026-09 # bereits übermittelter Zeitraum: Differenz vorbereiten
+/bookkeeping-kit:audit 2026-09      # unabhängige Nachprüfung, --eval für die Pipeline
+/bookkeeping-kit:rules              # Regeln nachschlagen
 ```
 
 ---
@@ -165,8 +165,8 @@ mit Seiteneffekten sind `disable-model-invocation: true` — sie lassen sich nur
 starten —, und was ein Agent schreiben darf, setzt ein Hook durch.
 
 **Schreibrechte der Agenten.** Jeder Agent schreibt genau zwei Orte: sein Memory unter
-`.claude/agent-memory/buchhaltung-kit-<agent>/` und seinen Abschnitt in
-`.claude/buchhaltung-log/<zeitraum>/agents.md`. Alles andere — Belege, Context, die
+`.claude/agent-memory/bookkeeping-kit-<agent>/` und seinen Abschnitt in
+`.claude/bookkeeping-log/<zeitraum>/agents.md`. Alles andere — Belege, Context, die
 nummerierten Phasendateien eines Laufs — ist für Agenten nur lesbar. Durchgesetzt wird das von
 `hooks/guard-agenten.py`, nicht vom Frontmatter: Der Hook erkennt den Agenten am Feld
 `agent_type` der Hook-Eingabe und prüft den Zielpfad jedes Write und Edit. Bash ist für
@@ -190,13 +190,13 @@ Alle Agenten folgen demselben Aufbau (Schema von `add-agent`):
 - **Vor dem Start, in dieser Reihenfolge:** Context lesen (fehlt er → Abbruch mit Verweis auf
   `adopt`), eigenes Memory lesen, Abschnitte der Vorgänger in `agents.md` lesen, dann die
   rollenspezifischen Quellen.
-- **Memory selbst verwaltet** unter `.claude/agent-memory/buchhaltung-kit-<agent>/` mit
+- **Memory selbst verwaltet** unter `.claude/agent-memory/bookkeeping-kit-<agent>/` mit
   `MEMORY.md` als Index. Der Pfad steht ausgeschrieben im Agenten, weil ein bekannter
   Harness-Fehler injizierte Memory-Pfade für Plugin-Agenten unzuverlässig macht.
 - **Laufprotokoll:** Jeder Agent hängt an `agents.md` einen Abschnitt unter eigener
   Überschrift an (`## <agent> — <zeitpunkt>`) und ändert nie fremde Abschnitte. Abweichung
   von `add-agent`: Das Protokoll liegt im Laufverzeichnis des Zeitraums
-  (`.claude/buchhaltung-log/<zeitraum>/agents.md`), nicht unter `.claude/agents-log/`, weil
+  (`.claude/bookkeeping-log/<zeitraum>/agents.md`), nicht unter `.claude/agents-log/`, weil
   ein Lauf hier an einen Voranmeldungszeitraum gebunden ist.
 - **Ergebnisse** gehen als Bericht an die aufrufende Skill. Sie schreibt die Phasendateien
   (`20-belege.jsonl`, `30-klassifikation.jsonl` …), denn diese sind der

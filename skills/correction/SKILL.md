@@ -1,6 +1,6 @@
 ---
 name: correction
-description: "Bereitet die Berichtigung einer bereits übermittelten Voranmeldung vor: ermittelt Altstand und Neustand je Kennziffer, stellt die Differenz dar und bewertet, ob berichtigt werden muss. Übermittelt nichts. Triggers on: /buchhaltung-kit:correction <YYYY-MM>"
+description: "Bereitet die Berichtigung einer bereits übermittelten Voranmeldung vor: ermittelt Altstand und Neustand je Kennziffer, stellt die Differenz dar und bewertet, ob berichtigt werden muss. Übermittelt nichts. Triggers on: /bookkeeping-kit:correction <YYYY-MM>"
 disable-model-invocation: true
 argument-hint: "<YYYY-MM>"
 ---
@@ -18,7 +18,7 @@ eine Frage an den Steuerberater — nicht an dich.
 **Bevor irgendetwas angefasst wird.** Ist die übermittelte Fassung erst überschrieben, lässt
 sie sich oft nicht wiederherstellen, und dann ist die Differenz nicht mehr belegbar.
 
-Nach `.claude/buchhaltung-log/<zeitraum>/70-korrektur.md`, Abschnitt „Altstand":
+Nach `.claude/bookkeeping-log/<zeitraum>/70-korrektur.md`, Abschnitt „Altstand":
 
 ```
 übermittelt am <datum>

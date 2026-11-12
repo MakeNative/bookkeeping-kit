@@ -13,7 +13,7 @@ das ganze Kit gebaut ist.
 |---|---|---|
 | `guard-originale.py` | P-03, P-05 | `Bash`, `Write`, `Edit`, `NotebookEdit` — Löschen, Verschieben, Überschreiben im Belegordner |
 | `guard-uebermittlung.py` | P-01 | Navigation auf Übermittlungsziele der Finanzverwaltung |
-| `guard-agenten.py` | Schreibrechte der Agenten | `Bash`, `Write`, `Edit`, `NotebookEdit` aus einem Kit-Agenten (`agent_type` = `buchhaltung-kit:<agent>`): Write/Edit nur ins eigene Memory und in `agents.md` des Laufs, Bash nur lesend |
+| `guard-agenten.py` | Schreibrechte der Agenten | `Bash`, `Write`, `Edit`, `NotebookEdit` aus einem Kit-Agenten (`agent_type` = `bookkeeping-kit:<agent>`): Write/Edit nur ins eigene Memory und in `agents.md` des Laufs, Bash nur lesend |
 
 Alle drei blockieren mit Exit-Code 2; die Begründung geht an das Modell zurück.
 
@@ -53,7 +53,7 @@ Ergebnis nicht. Ob ein Beleg tatsächlich angelegt wurde, zeigt erst der Bestand
 
 | Hook | Zweck |
 |---|---|
-| `spur-navigation.py` | schreibt jede Navigation nach `.claude/buchhaltung-log/navigation.jsonl` — die Grundlage, auf der das Audit prüfen kann, dass nichts übermittelt wurde |
+| `spur-navigation.py` | schreibt jede Navigation nach `.claude/bookkeeping-log/navigation.jsonl` — die Grundlage, auf der das Audit prüfen kann, dass nichts übermittelt wurde |
 | `sitzungsstart.py` | meldet Versionsdrift zwischen Regelwerk im Plugin und dem Stand, gegen den der Mandant zuletzt gerechnet hat |
 
 **Grenze von `SessionStart`:** Der Hook läuft einmal beim Sitzungsbeginn. Wird das Plugin

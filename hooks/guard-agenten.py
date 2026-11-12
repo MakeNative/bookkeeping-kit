@@ -4,12 +4,12 @@
 Die Agenten lesen fremde Dokumente — Belege, Mails, Portalseiten. Was darin steht, darf
 nichts verändern können. Deshalb schreibt ein Agent des Kits genau zwei Orte:
 
-  .claude/agent-memory/buchhaltung-kit-<agent>/          sein Memory
-  .claude/buchhaltung-log/<zeitraum>/agents.md           sein Abschnitt im Laufprotokoll
-  .claude/buchhaltung-eval/agents.md                     (Auswertungen über mehrere Läufe)
+  .claude/agent-memory/bookkeeping-kit-<agent>/          sein Memory
+  .claude/bookkeeping-log/<zeitraum>/agents.md           sein Abschnitt im Laufprotokoll
+  .claude/bookkeeping-eval/agents.md                     (Auswertungen über mehrere Läufe)
 
 Erkannt wird ein Kit-Agent am Feld `agent_type` der Hook-Eingabe
-(`buchhaltung-kit:<agent>`). Fehlt es, kommt der Aufruf aus dem Hauptkontext, und dieser
+(`bookkeeping-kit:<agent>`). Fehlt es, kommt der Aufruf aus dem Hauptkontext, und dieser
 Hook lässt durch — dort gelten die übrigen Guards.
 
 Bash wird für Kit-Agenten auf Lesen beschränkt: Umleitungen in Dateien, `tee`, `cp`, `mv`,
@@ -20,7 +20,7 @@ import re, sys, os, pathlib
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from kontext import eingabe, blockieren, durchlassen, projektwurzel
 
-PLUGIN = "buchhaltung-kit"
+PLUGIN = "bookkeeping-kit"
 
 SCHREIBEND = re.compile(
     r"(?:^|[\s;|&)])\d?>{1,2}\s*(?!&|/dev/null)[^\s&>]"    # > datei, >> datei, 2> datei
@@ -51,8 +51,8 @@ def erlaubt(pfad):
     c = wurzel / ".claude"
     if p.is_relative_to(c / "agent-memory" / f"{PLUGIN}-{name}"):
         return True
-    if p.name == "agents.md" and (p.parent.parent == c / "buchhaltung-log"
-                                  or p.parent == c / "buchhaltung-eval"):
+    if p.name == "agents.md" and (p.parent.parent == c / "bookkeeping-log"
+                                  or p.parent == c / "bookkeeping-eval"):
         return True
     return False
 

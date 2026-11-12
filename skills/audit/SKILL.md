@@ -1,6 +1,6 @@
 ---
 name: audit
-description: "Startet die unabhängige Nachprüfung eines Laufs — Stichprobe gegen die Originalbelege und Auswertung der Pipeline über mehrere Zeiträume. Triggers on: /buchhaltung-kit:audit [YYYY-MM] [--eval]"
+description: "Startet die unabhängige Nachprüfung eines Laufs — Stichprobe gegen die Originalbelege und Auswertung der Pipeline über mehrere Zeiträume. Triggers on: /bookkeeping-kit:audit [YYYY-MM] [--eval]"
 disable-model-invocation: true
 argument-hint: "[YYYY-MM] [--eval]"
 ---
@@ -37,12 +37,12 @@ Rolle; ein mitgeliefertes Fazit zieht ihn in dieselbe Spur, die er prüfen soll.
 Nur bei `--eval` oder wenn mindestens drei Läufe vorliegen.
 
 Spawne `agent-evaluator` über alle Laufverzeichnisse, mit dem Auftragsrahmen aus `monthly-run`;
-sein Protokoll ist `.claude/buchhaltung-eval/agents.md`. Er bewertet die Pipeline, nicht den
+sein Protokoll ist `.claude/bookkeeping-eval/agents.md`. Er bewertet die Pipeline, nicht den
 Monat — zwei verschiedene Fragen, die nicht in einen Bericht gehören.
 
 ## Schritt 4 — Ergebnis schreiben
 
-`.claude/buchhaltung-log/<zeitraum>/80-audit.md`:
+`.claude/bookkeeping-log/<zeitraum>/80-audit.md`:
 
 ```
 Audit <zeitraum> · <datum>
@@ -55,7 +55,7 @@ Befunde nach Schwere
 Nicht prüfbar: <was, warum>
 ```
 
-Bei `--eval` zusätzlich `.claude/buchhaltung-log/90-eval.md` — **außerhalb** des
+Bei `--eval` zusätzlich `.claude/bookkeeping-log/90-eval.md` — **außerhalb** des
 Zeitraumordners, weil er mehrere Zeiträume umspannt.
 
 ## Schritt 5 — Vorlegen

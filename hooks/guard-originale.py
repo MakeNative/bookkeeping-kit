@@ -47,7 +47,7 @@ elif tool in ("Write", "Edit", "NotebookEdit"):
         blockieren(
             f"Blockiert (P-05): Schreibzugriff auf {ziel} im Belegordner {o}.\n"
             f"Belege sind Originale und werden nicht überschrieben. Laufergebnisse "
-            f"gehören nach .claude/buchhaltung-log/."
+            f"gehören nach .claude/bookkeeping-log/."
         )
 
 durchlassen()

@@ -46,7 +46,7 @@ FAELLE = [
     ("rm ausserhalb erlaubt", "guard-originale.py", "Bash",
      {"command": "rm /tmp/scratch/zwischenergebnis.json"}, PASS),
     ("Write ins Laufprotokoll erlaubt", "guard-originale.py", "Write",
-     {"file_path": "{ROOT}/.claude/buchhaltung-log/2026-09/20-belege.jsonl"}, PASS),
+     {"file_path": "{ROOT}/.claude/bookkeeping-log/2026-09/20-belege.jsonl"}, PASS),
 
     ("Elster blockiert", "guard-uebermittlung.py", "mcp__claude-in-chrome__navigate",
      {"url": "https://www.elster.de/eportal/formulare-leistungen"}, BLOCK),
@@ -67,52 +67,52 @@ FAELLE = [
 
     # Schreibrechte der Kit-Agenten
     ("Agent: Write ins eigene Memory erlaubt", "guard-agenten.py", "Write",
-     {"file_path": "{ROOT}/.claude/agent-memory/buchhaltung-kit-receipt-reader/MEMORY.md"},
-     PASS, "buchhaltung-kit:receipt-reader"),
+     {"file_path": "{ROOT}/.claude/agent-memory/bookkeeping-kit-receipt-reader/MEMORY.md"},
+     PASS, "bookkeeping-kit:receipt-reader"),
     ("Agent: Write in fremdes Memory blockiert", "guard-agenten.py", "Write",
-     {"file_path": "{ROOT}/.claude/agent-memory/buchhaltung-kit-tax-classifier/MEMORY.md"},
-     BLOCK, "buchhaltung-kit:receipt-reader"),
+     {"file_path": "{ROOT}/.claude/agent-memory/bookkeeping-kit-tax-classifier/MEMORY.md"},
+     BLOCK, "bookkeeping-kit:receipt-reader"),
     ("Agent: Edit an agents.md des Laufs erlaubt", "guard-agenten.py", "Edit",
-     {"file_path": "{ROOT}/.claude/buchhaltung-log/2026-10/agents.md"},
-     PASS, "buchhaltung-kit:plausibility-gate"),
+     {"file_path": "{ROOT}/.claude/bookkeeping-log/2026-10/agents.md"},
+     PASS, "bookkeeping-kit:plausibility-gate"),
     ("Agent: Phasendatei blockiert", "guard-agenten.py", "Write",
-     {"file_path": "{ROOT}/.claude/buchhaltung-log/2026-10/20-belege.jsonl"},
-     BLOCK, "buchhaltung-kit:receipt-reader"),
+     {"file_path": "{ROOT}/.claude/bookkeeping-log/2026-10/20-belege.jsonl"},
+     BLOCK, "bookkeeping-kit:receipt-reader"),
     ("Agent: Context blockiert", "guard-agenten.py", "Edit",
      {"file_path": "{ROOT}/.claude/docs/COMPANY_CONTEXT.md"},
-     BLOCK, "buchhaltung-kit:tax-classifier"),
+     BLOCK, "bookkeeping-kit:tax-classifier"),
     ("Agent: Memory relativ aus Unterordner erlaubt", "guard-agenten.py", "Write",
-     {"file_path": "../agent-memory/buchhaltung-kit-monthly-auditor/MEMORY.md"},
-     PASS, "buchhaltung-kit:monthly-auditor", ".claude/buchhaltung-log"),
+     {"file_path": "../agent-memory/bookkeeping-kit-monthly-auditor/MEMORY.md"},
+     PASS, "bookkeeping-kit:monthly-auditor", ".claude/bookkeeping-log"),
     ("Agent: Pfad mit .. aus dem Memory heraus blockiert", "guard-agenten.py", "Write",
-     {"file_path": "{ROOT}/.claude/agent-memory/buchhaltung-kit-receipt-reader/../../docs/x.md"},
-     BLOCK, "buchhaltung-kit:receipt-reader"),
-    ("Agent: Evaluator schreibt buchhaltung-eval/agents.md", "guard-agenten.py", "Write",
-     {"file_path": "{ROOT}/.claude/buchhaltung-eval/agents.md"},
-     PASS, "buchhaltung-kit:agent-evaluator"),
+     {"file_path": "{ROOT}/.claude/agent-memory/bookkeeping-kit-receipt-reader/../../docs/x.md"},
+     BLOCK, "bookkeeping-kit:receipt-reader"),
+    ("Agent: Evaluator schreibt bookkeeping-eval/agents.md", "guard-agenten.py", "Write",
+     {"file_path": "{ROOT}/.claude/bookkeeping-eval/agents.md"},
+     PASS, "bookkeeping-kit:agent-evaluator"),
     ("Agent: Bash lesen erlaubt", "guard-agenten.py", "Bash",
      {"command": "pdftotext -layout {EIN}/2026/a.pdf - 2>/dev/null | grep -n '<cbc:ID>' | head"},
-     PASS, "buchhaltung-kit:receipt-reader"),
+     PASS, "bookkeeping-kit:receipt-reader"),
     ("Agent: Bash mit stderr-Umleitung erlaubt", "guard-agenten.py", "Bash",
      {"command": "python3 tools/belege_lesen.py --zeitraum 2026-10 2>&1 | tail -5"},
-     PASS, "buchhaltung-kit:receipt-reader"),
+     PASS, "bookkeeping-kit:receipt-reader"),
     ("Agent: Bash-Umleitung in Datei blockiert", "guard-agenten.py", "Bash",
      {"command": "echo x > {ROOT}/.claude/docs/COMPANY_CONTEXT.md"},
-     BLOCK, "buchhaltung-kit:receipt-reader"),
+     BLOCK, "bookkeeping-kit:receipt-reader"),
     ("Agent: Bash tee blockiert", "guard-agenten.py", "Bash",
-     {"command": "cat a.json | tee {ROOT}/.claude/buchhaltung-log/2026-10/20-belege.jsonl"},
-     BLOCK, "buchhaltung-kit:receipt-reader"),
+     {"command": "cat a.json | tee {ROOT}/.claude/bookkeeping-log/2026-10/20-belege.jsonl"},
+     BLOCK, "bookkeeping-kit:receipt-reader"),
     ("Agent: Bash sed -i blockiert", "guard-agenten.py", "Bash",
      {"command": "sed -i '' 's/a/b/' {ROOT}/.claude/docs/COMPANY_CONTEXT.md"},
-     BLOCK, "buchhaltung-kit:tax-classifier"),
+     BLOCK, "bookkeeping-kit:tax-classifier"),
     ("Hauptkontext: Write ins Laufprotokoll erlaubt", "guard-agenten.py", "Write",
-     {"file_path": "{ROOT}/.claude/buchhaltung-log/2026-10/20-belege.jsonl"}, PASS, ""),
+     {"file_path": "{ROOT}/.claude/bookkeeping-log/2026-10/20-belege.jsonl"}, PASS, ""),
     ("Fremder Agent unberührt", "guard-agenten.py", "Write",
      {"file_path": "{ROOT}/.claude/docs/COMPANY_CONTEXT.md"}, PASS, "general-purpose"),
 
     # Arbeitsverzeichnis unterhalb des Mandanten: Context wird trotzdem gefunden
     ("Unterordner: Write in den Belegordner blockiert", "guard-originale.py", "Write",
-     {"file_path": "{EIN}/2026/neu.pdf", "content": "x"}, BLOCK, "", ".claude/buchhaltung-log"),
+     {"file_path": "{EIN}/2026/neu.pdf", "content": "x"}, BLOCK, "", ".claude/bookkeeping-log"),
 ]
 
 
@@ -121,7 +121,7 @@ def main():
     with tempfile.TemporaryDirectory() as tmp:
         d = mandant(tmp)
         ein = f"{d}/Rechnungen"
-        (d / ".claude" / "buchhaltung-log").mkdir(parents=True, exist_ok=True)
+        (d / ".claude" / "bookkeeping-log").mkdir(parents=True, exist_ok=True)
         for name, skript, tool, vorlage, erwartet, *rest in FAELLE:
             typ = rest[0] if rest else ""
             wo = d / rest[1] if len(rest) > 1 else d
@@ -152,7 +152,7 @@ def main():
             ok = rc == PASS
             fehler += not ok
             print(f"  [{'OK  ' if ok else 'FEHL'}] {skript} blockiert nicht")
-        spur = d / ".claude" / "buchhaltung-log" / "navigation.jsonl"
+        spur = d / ".claude" / "bookkeeping-log" / "navigation.jsonl"
         ok = spur.exists() and "x.example" in spur.read_text()
         fehler += not ok
         print(f"  [{'OK  ' if ok else 'FEHL'}] Navigationsspur wird geschrieben")

@@ -1,6 +1,6 @@
 ---
 name: collect
-description: "Stellt für einen Zeitraum zusammen, welche Belege es geben müsste und welche davon vorliegen — aus Belegordner, Postfächern, Anbieterportalen und Zahlungsmeldungen. Erzeugt die Soll-Liste und fordert nötige Logins gebündelt an. Triggers on: /buchhaltung-kit:collect <YYYY-MM>"
+description: "Stellt für einen Zeitraum zusammen, welche Belege es geben müsste und welche davon vorliegen — aus Belegordner, Postfächern, Anbieterportalen und Zahlungsmeldungen. Erzeugt die Soll-Liste und fordert nötige Logins gebündelt an. Triggers on: /bookkeeping-kit:collect <YYYY-MM>"
 disable-model-invocation: true
 ---
 
@@ -136,7 +136,7 @@ geben, statt zu versuchen, den Viewer zu bedienen — dessen Bedienleiste ist ni
 
 ## Schritt 5 — Soll-Liste schreiben
 
-`.claude/buchhaltung-log/<zeitraum>/10-soll-liste.md`:
+`.claude/bookkeeping-log/<zeitraum>/10-soll-liste.md`:
 
 ```
 quelle        zahlung | lieferantenliste | ausgangsordner
@@ -153,7 +153,7 @@ begruendung   bei allem außer "vorhanden"
 
 ## Schritt 6 — Offene Punkte fortschreiben
 
-Lies `.claude/buchhaltung-offene-punkte.md`, hake Erledigtes ab und trage Neues ein. Ohne
+Lies `.claude/bookkeeping-open-items.md`, hake Erledigtes ab und trage Neues ein. Ohne
 dieses Register wird eine Rechnung, die erst im Folgemonat erscheint, nie wieder gesucht.
 
 ## Rückgabe

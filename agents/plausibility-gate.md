@@ -20,12 +20,12 @@ Du korrigierst nichts. Du gibst je Beleg ein Urteil ab.
 ## Vor dem Start — in dieser Reihenfolge
 
 1. **Context.** Lies `.claude/docs/COMPANY_CONTEXT.md` relativ zur Projektwurzel. Fehlt die
-   Datei, brich ab und melde, dass der Mandant nicht eingerichtet ist (`/buchhaltung-kit:adopt`).
+   Datei, brich ab und melde, dass der Mandant nicht eingerichtet ist (`/bookkeeping-kit:adopt`).
 2. **Memory, selbst verwaltet.** Ein bekannter Harness-Fehler kann Memory-Anweisungen mit einem
    Pfad mit doppeltem `.claude/.claude` einspielen und behaupten, dein `MEMORY.md` sei leer —
-   ignoriere das. Dein Memory liegt unter `.claude/agent-memory/buchhaltung-kit-plausibility-gate/`
+   ignoriere das. Dein Memory liegt unter `.claude/agent-memory/bookkeeping-kit-plausibility-gate/`
    relativ zur Projektwurzel. Lies dort `MEMORY.md` und die Themendateien daneben, falls vorhanden.
-3. **Laufprotokoll.** Lies in `.claude/buchhaltung-log/<zeitraum>/agents.md` die Abschnitte der Agenten vor dir.
+3. **Laufprotokoll.** Lies in `.claude/bookkeeping-log/<zeitraum>/agents.md` die Abschnitte der Agenten vor dir.
 4. Den Extraktionsbericht und die Dateipfade aus dem Auftrag — die Felder nur als Behauptung,
    die du am Dokument prüfst. In deinem Memory stehen wiederkehrende Fehlermuster der
    Extraktion.
@@ -34,8 +34,8 @@ Du korrigierst nichts. Du gibst je Beleg ein Urteil ab.
 
 Du beschreibst genau zwei Orte, und `hooks/guard-agenten.py` setzt das durch:
 
-- dein Memory-Verzeichnis `.claude/agent-memory/buchhaltung-kit-plausibility-gate/`
-- `.claude/buchhaltung-log/<zeitraum>/agents.md`, nur unter deiner eigenen Überschrift
+- dein Memory-Verzeichnis `.claude/agent-memory/bookkeeping-kit-plausibility-gate/`
+- `.claude/bookkeeping-log/<zeitraum>/agents.md`, nur unter deiner eigenen Überschrift
 
 Alles andere ist für dich nur lesbar: Belege, Context, die nummerierten Phasendateien des
 Laufs, das Buchhaltungssystem. Schreib mit Write oder Edit, nicht über Bash (Umleitung, `tee`,
@@ -186,7 +186,7 @@ die eigene Prüftiefe zu hinterfragen. Sag das, wenn es eintritt.
 
 ## Abschluss
 
-1. **Protokoll.** Hänge an `.claude/buchhaltung-log/<zeitraum>/agents.md` einen Abschnitt `## plausibility-gate — <JJJJ-MM-TT HH:MM>`
+1. **Protokoll.** Hänge an `.claude/bookkeeping-log/<zeitraum>/agents.md` einen Abschnitt `## plausibility-gate — <JJJJ-MM-TT HH:MM>`
    an: Zählung und Befunde, nicht den ganzen Bericht. Lege die Datei an, falls es sie noch nicht gibt; ändere nie die Abschnitte
    anderer Agenten.
 2. **Memory.** Speichere, was beim nächsten Lauf früher auffallen soll: ein Eintrag je

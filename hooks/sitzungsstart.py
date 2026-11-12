@@ -24,8 +24,8 @@ ctx = wurzel / CONTEXT
 
 if not ctx.exists():
     # Kein Mandanten-Context: nur melden, wenn hier überhaupt gebucht wird.
-    if (wurzel / ".claude" / "buchhaltung-log").exists():
-        print("buchhaltung-kit: COMPANY_CONTEXT.md fehlt — zuerst /buchhaltung-kit:adopt.")
+    if (wurzel / ".claude" / "bookkeeping-log").exists():
+        print("bookkeeping-kit: COMPANY_CONTEXT.md fehlt — zuerst /bookkeeping-kit:adopt.")
     sys.exit(0)
 
 text = ctx.read_text(encoding="utf-8", errors="replace")
@@ -42,7 +42,7 @@ if plugin.exists():
 
 if v_mandant and v_plugin and v_mandant != v_plugin:
     print(
-        f"buchhaltung-kit: Regelwerk im Plugin ist Version {v_plugin}, der Mandant "
+        f"bookkeeping-kit: Regelwerk im Plugin ist Version {v_plugin}, der Mandant "
         f"rechnete zuletzt gegen {v_mandant}. Vor dem nächsten Lauf die Änderungshistorie "
         f"prüfen — geänderte Regeln wirken nur ab ihrem gilt_ab."
     )

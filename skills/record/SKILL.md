@@ -1,6 +1,6 @@
 ---
 name: record
-description: "Legt klassifizierte Belege im Buchhaltungssystem an — einzeln, mit Dublettenprüfung davor und Sichtprüfung danach. Schreibt fortlaufend mit, damit ein Abbruch ohne Doppelbuchung wiederaufgenommen werden kann. Triggers on: /buchhaltung-kit:record <YYYY-MM>"
+description: "Legt klassifizierte Belege im Buchhaltungssystem an — einzeln, mit Dublettenprüfung davor und Sichtprüfung danach. Schreibt fortlaufend mit, damit ein Abbruch ohne Doppelbuchung wiederaufgenommen werden kann. Triggers on: /bookkeeping-kit:record <YYYY-MM>"
 disable-model-invocation: true
 argument-hint: "<YYYY-MM>"
 ---
@@ -97,7 +97,7 @@ Lieferanten"). Frag das **vor** dem ersten Beleg, nicht beim ersten Treffer.
 
 ### 4. Mitschreiben — sofort, nicht am Ende
 
-Hänge **nach jedem Beleg** eine Zeile an `.claude/buchhaltung-log/<zeitraum>/40-erfassung.jsonl`:
+Hänge **nach jedem Beleg** eine Zeile an `.claude/bookkeeping-log/<zeitraum>/40-erfassung.jsonl`:
 
 ```
 datei · lieferant · belegnummer · belegdatum · betrag · waehrung

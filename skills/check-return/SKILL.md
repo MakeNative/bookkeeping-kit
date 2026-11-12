@@ -1,6 +1,6 @@
 ---
 name: check-return
-description: "Gleicht die klassifizierten Belege gegen die Voranmeldung im Buchhaltungssystem ab: Kennziffern, Rundungsmodell, gegengleiche Positionen, offene Posten und Zuordnungsstatus. Meldet jede Abweichung mit Centbetrag. Triggers on: /buchhaltung-kit:check-return <YYYY-MM>"
+description: "Gleicht die klassifizierten Belege gegen die Voranmeldung im Buchhaltungssystem ab: Kennziffern, Rundungsmodell, gegengleiche Positionen, offene Posten und Zuordnungsstatus. Meldet jede Abweichung mit Centbetrag. Triggers on: /bookkeeping-kit:check-return <YYYY-MM>"
 disable-model-invocation: true
 ---
 
@@ -114,7 +114,7 @@ Meldepflicht hin (A-05). Die Meldung selbst gehört nicht zum Automatisierungsum
 
 ## Ergebnis
 
-`.claude/buchhaltung-log/<zeitraum>/50-gates.md`, Abschnitt „Gate D":
+`.claude/bookkeeping-log/<zeitraum>/50-gates.md`, Abschnitt „Gate D":
 
 ```
 erwartet vs. tatsächlich je Kennziffer

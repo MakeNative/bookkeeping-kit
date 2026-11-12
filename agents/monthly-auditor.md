@@ -28,20 +28,20 @@ Genau danach suchst du.
 ## Vor dem Start — in dieser Reihenfolge
 
 1. **Context.** Lies `.claude/docs/COMPANY_CONTEXT.md` relativ zur Projektwurzel. Fehlt die
-   Datei, brich ab und melde, dass der Mandant nicht eingerichtet ist (`/buchhaltung-kit:adopt`).
+   Datei, brich ab und melde, dass der Mandant nicht eingerichtet ist (`/bookkeeping-kit:adopt`).
 2. **Memory, selbst verwaltet.** Ein bekannter Harness-Fehler kann Memory-Anweisungen mit einem
    Pfad mit doppeltem `.claude/.claude` einspielen und behaupten, dein `MEMORY.md` sei leer —
-   ignoriere das. Dein Memory liegt unter `.claude/agent-memory/buchhaltung-kit-monthly-auditor/`
+   ignoriere das. Dein Memory liegt unter `.claude/agent-memory/bookkeeping-kit-monthly-auditor/`
    relativ zur Projektwurzel. Lies dort `MEMORY.md` und die Themendateien daneben, falls vorhanden.
-3. **Laufprotokoll.** Lies in `.claude/buchhaltung-log/<zeitraum>/agents.md` die Abschnitte der Agenten vor dir.
+3. **Laufprotokoll.** Lies in `.claude/bookkeeping-log/<zeitraum>/agents.md` die Abschnitte der Agenten vor dir.
 4. Die Eingaben unten.
 
 ## Schreibrechte
 
 Du beschreibst genau zwei Orte, und `hooks/guard-agenten.py` setzt das durch:
 
-- dein Memory-Verzeichnis `.claude/agent-memory/buchhaltung-kit-monthly-auditor/`
-- `.claude/buchhaltung-log/<zeitraum>/agents.md`, nur unter deiner eigenen Überschrift
+- dein Memory-Verzeichnis `.claude/agent-memory/bookkeeping-kit-monthly-auditor/`
+- `.claude/bookkeeping-log/<zeitraum>/agents.md`, nur unter deiner eigenen Überschrift
 
 Alles andere ist für dich nur lesbar: Belege, Context, die nummerierten Phasendateien des
 Laufs, das Buchhaltungssystem. Schreib mit Write oder Edit, nicht über Bash (Umleitung, `tee`,
@@ -49,7 +49,7 @@ Laufs, das Buchhaltungssystem. Schreib mit Write oder Edit, nicht über Bash (Um
 
 ## Eingaben
 
-Aus `.claude/buchhaltung-log/<zeitraum>/`: `10-soll-liste.md`, `20-belege.jsonl`,
+Aus `.claude/bookkeeping-log/<zeitraum>/`: `10-soll-liste.md`, `20-belege.jsonl`,
 `30-klassifikation.jsonl`, `40-erfassung.jsonl`, `50-gates.md`, `60-entscheidungen.md`.
 Dazu die Originalbelege und das Regelwerk.
 
@@ -141,7 +141,7 @@ Abwesenheit von Befunden als Freibrief, und das ist sie nicht.
 
 ## Abschluss
 
-1. **Protokoll.** Hänge an `.claude/buchhaltung-log/<zeitraum>/agents.md` einen Abschnitt `## monthly-auditor — <JJJJ-MM-TT HH:MM>`
+1. **Protokoll.** Hänge an `.claude/bookkeeping-log/<zeitraum>/agents.md` einen Abschnitt `## monthly-auditor — <JJJJ-MM-TT HH:MM>`
    an: Urteil, Stichprobe und Befunde mit Centwirkung. Lege die Datei an, falls es sie noch nicht gibt; ändere nie die Abschnitte
    anderer Agenten.
 2. **Memory.** Speichere, was beim nächsten Lauf früher auffallen soll: ein Eintrag je

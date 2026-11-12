@@ -1,6 +1,6 @@
 ---
 name: follow-up
-description: "Arbeitet das Register offener Punkte ab: Belege, die beim Monatslauf fehlten, Portale ohne Login, verspätet ausgestellte Rechnungen. Entscheidet je Fund, ob er in den alten Zeitraum gehört oder in den laufenden. Triggers on: /buchhaltung-kit:follow-up [YYYY-MM]"
+description: "Arbeitet das Register offener Punkte ab: Belege, die beim Monatslauf fehlten, Portale ohne Login, verspätet ausgestellte Rechnungen. Entscheidet je Fund, ob er in den alten Zeitraum gehört oder in den laufenden. Triggers on: /bookkeeping-kit:follow-up [YYYY-MM]"
 disable-model-invocation: true
 argument-hint: "[YYYY-MM]"
 ---
@@ -13,7 +13,7 @@ seinen eigenen Zeitraum, und niemand kommt auf den vorherigen zurück.
 
 ## Eingabe
 
-`.claude/buchhaltung-offene-punkte.md` — das Register, das `collect` fortschreibt. Ohne
+`.claude/bookkeeping-open-items.md` — das Register, das `collect` fortschreibt. Ohne
 Argument arbeitest du alle offenen Einträge ab, mit `YYYY-MM` nur die eines Zeitraums.
 
 ## Schritt 1 — Nachsehen

@@ -4,7 +4,7 @@
 CONTRACT_VERSION: 2
 ```
 
-Diese Datei wird von `/buchhaltung-kit:adopt` im **Mandantenprojekt** erzeugt und liegt dort
+Diese Datei wird von `/bookkeeping-kit:adopt` im **Mandantenprojekt** erzeugt und liegt dort
 unter `.claude/docs/COMPANY_CONTEXT.md`. Sie gehört **nicht** ins Plugin-Repo.
 
 Die Agenten und Skills des Kits sind generisch. Alles Unternehmensspezifische steht hier.

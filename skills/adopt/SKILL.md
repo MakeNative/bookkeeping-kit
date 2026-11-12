@@ -1,10 +1,10 @@
 ---
 name: adopt
-description: "Richtet ein Unternehmen für das buchhaltung-kit ein: liest die Steuereinstellungen aus dem Buchhaltungssystem aus, nimmt Ordner, Zahlungsquellen und Lieferanten auf und erzeugt COMPANY_CONTEXT.md. Jederzeit wiederholbar, um den Kontext aufzufrischen. Triggers on: /buchhaltung-kit:adopt"
+description: "Richtet ein Unternehmen für das bookkeeping-kit ein: liest die Steuereinstellungen aus dem Buchhaltungssystem aus, nimmt Ordner, Zahlungsquellen und Lieferanten auf und erzeugt COMPANY_CONTEXT.md. Jederzeit wiederholbar, um den Kontext aufzufrischen. Triggers on: /bookkeeping-kit:adopt"
 disable-model-invocation: true
 ---
 
-Du richtest dieses Projekt für das buchhaltung-kit ein. Arbeite **direkt** — delegiere das
+Du richtest dieses Projekt für das bookkeeping-kit ein. Arbeite **direkt** — delegiere das
 Schreiben nicht. Für die Belegauswertung darfst du den `receipt-reader` einsetzen.
 
 Diese Skill läuft im Hauptkontext, weil sie mit dem Menschen spricht: Logins, Rückfragen,
@@ -19,9 +19,30 @@ raten — eine falsche Besteuerungsart verfälscht einen ganzen Monat.
 
 Prüfe `.claude/docs/COMPANY_CONTEXT.md`:
 - fehlt → **Ersteinrichtung**, alle Schritte
-- vorhanden → **Auffrischung**: `AUSLESEN`-Felder neu prüfen, neue Lieferanten ergänzen,
+- vorhanden → zuerst **Migration** alter Namen (unten), dann **Auffrischung**: `AUSLESEN`-Felder neu prüfen, neue Lieferanten ergänzen,
   von Hand gepflegte Einträge **nicht** überschreiben. Vergleiche `CONTRACT_VERSION` mit
   `docs/COMPANY_CONTEXT_TEMPLATE.md` des Plugins und ergänze fehlende Abschnitte.
+
+### Migration alter Namen
+
+Bis Plugin 0.4 hieß das Kit `buchhaltung-kit`, und Agenten und Datenordner trugen deutsche
+Namen. Findest du im Mandantenprojekt alte Namen, zieh sie um, Inhalt unverändert:
+
+| alt | neu |
+|---|---|
+| `.claude/buchhaltung-log/` | `.claude/bookkeeping-log/` |
+| `.claude/buchhaltung-eval/` | `.claude/bookkeeping-eval/` |
+| `.claude/buchhaltung-offene-punkte.md` | `.claude/bookkeeping-open-items.md` |
+| `.claude/agent-memory/buchhaltung-kit-<agent>/` | `.claude/agent-memory/bookkeeping-kit-<agent>/` |
+| Agent `beleg-leser` | `receipt-reader` |
+| Agent `steuer-klassifizierer` | `tax-classifier` |
+| Agent `plausibilitaets-gate` | `plausibility-gate` |
+| Agent `monats-auditor` | `monthly-auditor` |
+
+Auch `.gitignore` und Verweise im Context (`/buchhaltung-kit:…`, Pfade) nachziehen. Existiert
+ein Ziel schon, nicht überschreiben, sondern beide dem Nutzer zeigen. Liegt Memory unter
+`.claude/.claude/agent-memory/` (Folge des Harness-Fehlers), mit dem richtigen Ordner
+zusammenführen und dem Nutzer melden, was wohin ging.
 
 ## Schritt 1 — Buchhaltungssystem verbinden und auslesen
 
@@ -98,7 +119,7 @@ Ohne diesen Schritt werden regelmäßig Fremdbelege gebucht (Regel E-13).
 
 Zähle im Buchhaltungssystem, was aus Vorperioden offen ist: ungeprüfte Belege, überfällige
 Posten, Entwürfe. Schreibe die Summen und den Stichtag in den Context und lege
-`.claude/buchhaltung-offene-punkte.md` an.
+`.claude/bookkeeping-open-items.md` an.
 
 Der Monatslauf fasst diesen Altbestand **nicht** an — aber er darf auch nicht verschwinden.
 
@@ -114,21 +135,16 @@ Melde dem Nutzer in **einer** Liste, was einmalig umzustellen ist:
 ## Schritt 8 — Dateien anlegen
 
 1. `.claude/docs/COMPANY_CONTEXT.md` nach der Vorlage des Plugins
-2. `.claude/agent-memory/buchhaltung-kit-<agent>/` für die Agenten des Kits. Bei einer
-   Auffrischung die Memory-Ordner der alten deutschen Agentennamen umziehen, Inhalt
-   unverändert (bis Plugin 0.2.x):
-   `beleg-leser` → `receipt-reader`, `steuer-klassifizierer` → `tax-classifier`,
-   `plausibilitaets-gate` → `plausibility-gate`, `monats-auditor` → `monthly-auditor`.
-   Existiert der neue Ordner schon, nicht überschreiben, sondern beide dem Nutzer zeigen.
-3. `.claude/buchhaltung-log/` und `.claude/buchhaltung-eval/`
+2. `.claude/agent-memory/bookkeeping-kit-<agent>/` für die Agenten des Kits
+3. `.claude/bookkeeping-log/` und `.claude/bookkeeping-eval/`
 4. Hooks aus `hooks/hooks.json` in `.claude/settings.json` mergen — **vorhandene Hooks nicht
    überschreiben**, nur ergänzen
 5. `.gitignore` des Projekts ergänzen:
    ```
    .claude/docs/COMPANY_CONTEXT.md
-   .claude/buchhaltung-log/
-   .claude/buchhaltung-eval/
-   .claude/buchhaltung-offene-punkte.md
+   .claude/bookkeeping-log/
+   .claude/bookkeeping-eval/
+   .claude/bookkeeping-open-items.md
    ```
 
 ## Abschluss
@@ -139,7 +155,7 @@ Altbestand, offene Umstellungen.
 Nenne als nächsten Schritt einen **Trockenlauf** für einen abgeschlossenen Monat:
 
 ```
-/buchhaltung-kit:monthly-run <YYYY-MM> --trocken
+/bookkeeping-kit:monthly-run <YYYY-MM> --trocken
 ```
 
 Weise darauf hin, dass Schwellenwerte im Regelwerk mit `wert_pruefen: ja` vor dem produktiven
